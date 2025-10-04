@@ -9,9 +9,9 @@ frontend:
       commands:
         - npm run build --prod
         - echo "Build completed. Checking output directory..."
-        - ls -la dist/ExMachina/browser
+        - ls -la dist/exm/browser
   artifacts:
-    baseDirectory: dist/ExMachina/browser
+    baseDirectory: dist/exm/browser
     files:
       - '**/*'
   cache:
