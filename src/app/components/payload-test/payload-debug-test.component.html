@@ -1,0 +1,58 @@
+<div class="payload-test-container">
+  <h2>🔧 Payload Debug Test Component</h2>
+  <p>Testing the fixes for Total Equity and other balance sheet filters</p>
+
+  <!-- Test Controls -->
+  <div class="test-controls">
+    <button (click)="runAllTests()" class="btn btn-primary">Run All Tests</button>
+    <button (click)="clearResults()" class="btn btn-secondary">Clear Results</button>
+  </div>
+
+  <!-- Test Results -->
+  <div class="test-results" *ngIf="testResults.length > 0">
+    <h3>Test Results</h3>
+    <div *ngFor="let result of testResults" class="test-result" 
+         [ngClass]="{'success': result.success, 'error': !result.success}">
+      <h4>{{ result.testName }}</h4>
+      <div class="payload-info">
+        <strong>Payload:</strong>
+        <pre>{{ result.payload | json }}</pre>
+      </div>
+      <div class="result-info">
+        <strong>Status:</strong> {{ result.success ? '✅ PASSED' : '❌ FAILED' }}
+        <br>
+        <strong>Message:</strong> {{ result.message }}
+        <div *ngIf="result.transformedPayload">
+          <strong>Transformed Payload:</strong>
+          <pre>{{ result.transformedPayload | json }}</pre>
+        </div>
+        <div *ngIf="result.error">
+          <strong>Error:</strong> {{ result.error }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Individual Test Buttons -->
+  <div class="individual-tests">
+    <h3>Individual Tests</h3>
+    <div class="test-buttons">
+      <button (click)="testTotalAssets()" class="btn btn-info">Test Total Assets (Working)</button>
+      <button (click)="testTotalEquity()" class="btn btn-warning">Test Total Equity (Fixed)</button>
+      <button (click)="testTotalLiabilities()" class="btn btn-info">Test Total Liabilities</button>
+      <button (click)="testMultipleFilters()" class="btn btn-success">Test Multiple Filters</button>
+      <button (click)="testBetweenOperator()" class="btn btn-info">Test Between Operator</button>
+    </div>
+  </div>
+
+  <!-- Debug Logs -->
+  <div class="debug-logs" *ngIf="debugLogs.length > 0">
+    <h3>Debug Logs</h3>
+    <div class="logs-container">
+      <div *ngFor="let log of debugLogs" class="log-entry">
+        <span class="timestamp">{{ log.timestamp }}</span>
+        <span class="log-message">{{ log.message }}</span>
+      </div>
+    </div>
+  </div>
+</div>

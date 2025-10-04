@@ -1,0 +1,226 @@
+<!-- Company Profile Page -->
+<div class="flex flex-col md:flex-row min-h-screen">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  
+  <!-- Main Content -->
+  <div class="flex-grow overflow-x-auto w-full">
+    <!-- Header Section -->
+    <div class="bg-gray-900 border-b border-gray-800 px-6 py-3 flex flex-col md:flex-row justify-between">
+      <div style="font-family: 'Georgia', serif;">
+        <div class="flex items-center gap-2">
+          <h1 class="text-xl font-semibold" style="color: #e53e3e;margin-bottom: 0;font-size: 18px;">
+            {{ investmentFirm?.companyName || 'Company' }}
+          </h1>
+          |
+          <p class="text-xl" style="letter-spacing: 0.5px;margin-bottom: 0;font-size: 18px;">
+            Company Profile
+          </p>
+        </div>
+        <p class="text-md mt-1" style="text-align: left">
+          ID: {{ investmentFirm?.companyId || 'N/A' }}
+        </p>
+      </div>
+      
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap gap-2 mt-3 md:mt-0 items-start">
+       <div class="relative">
+        <button class="action-btn">
+          Create Alert
+        </button>
+       </div>
+        <div class="relative">
+          <button class="action-btn-dropdown">
+            Add to
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8.00002 11.3333C7.82936 11.3333 7.65867 11.268 7.52867 11.138L2.862 6.47137C2.60134 6.2107 2.60134 5.78933 2.862 5.52866C3.12267 5.26799 3.54405 5.26799 3.80471 5.52866L8.00002 9.724L12.1953 5.52866C12.456 5.26799 12.8774 5.26799 13.138 5.52866C13.3987 5.78933 13.3987 6.2107 13.138 6.47137L8.47138 11.138C8.34138 11.268 8.17069 11.3333 8.00002 11.3333Z" fill="white"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div class="relative">
+          <button class="action-btn">
+            Print
+          </button>
+        </div>
+        <div class="relative">
+          <button class="action-btn-dropdown">
+            Export
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8.00002 11.3333C7.82936 11.3333 7.65867 11.268 7.52867 11.138L2.862 6.47137C2.60134 6.2107 2.60134 5.78933 2.862 5.52866C3.12267 5.26799 3.54405 5.26799 3.80471 5.52866L8.00002 9.724L12.1953 5.52866C12.456 5.26799 12.8774 5.26799 13.138 5.52866C13.3987 5.78933 13.3987 6.2107 13.138 6.47137L8.47138 11.138C8.34138 11.268 8.17069 11.3333 8.00002 11.3333Z" fill="white"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div class="relative">
+          <button class="action-btn-dropdown">
+            Links
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8.00002 11.3333C7.82936 11.3333 7.65867 11.268 7.52867 11.138L2.862 6.47137C2.60134 6.2107 2.60134 5.78933 2.862 5.52866C3.12267 5.26799 3.54405 5.26799 3.80471 5.52866L8.00002 9.724L12.1953 5.52866C12.456 5.26799 12.8774 5.26799 13.138 5.52866C13.3987 5.78933 13.3987 6.2107 13.138 6.47137L8.47138 11.138C8.34138 11.268 8.17069 11.3333 8.00002 11.3333Z" fill="white"/>
+              </svg>
+            </span>
+          </button>
+        </div>
+       <div class="relative">
+        <button class="action-btn-primary">
+          Build a Report
+        </button>
+       </div>
+      </div>
+    </div>
+
+    <!-- Status Information Box -->
+    <div class="status-info-box">
+      <div class="status-section">
+        <span class="status-label">Status</span>
+        <span class="status-value">Operating</span>
+      </div>
+      <div class="status-section">
+        <span class="status-label">Primary Industry (MI)</span>
+        <span class="status-value">Asset Management</span>
+      </div>
+      <!-- <div class="status-section">
+        <span class="status-label">CEO</span>
+        <span class="status-value ceo-name">Salim Ramji</span>
+      </div> -->
+    </div>
+
+    <!-- Main Profile Content -->
+    <div class="p-6 shade_box">
+      <!-- Assets Under Management Chart Section -->
+      <div class="chart-section">
+        <div class="chart-container">
+          <h3 class="chart-title">Assets Under Management</h3>
+                     <div class="chart-placeholder">
+             <!-- ApexCharts Component -->
+             <apx-chart
+               *ngIf="chartOptions"
+               [series]="chartOptions.series!"
+               [chart]="chartOptions.chart!"
+               [yaxis]="chartOptions.yaxis!"
+               [xaxis]="chartOptions.xaxis!"
+               [labels]="chartOptions.labels!"
+               [stroke]="chartOptions.stroke!"
+               [title]="chartOptions.title!"
+               [dataLabels]="chartOptions.dataLabels!"
+               [fill]="chartOptions.fill!"
+               [tooltip]="chartOptions.tooltip!"
+               [colors]="chartOptions.colors!"
+               [legend]="chartOptions.legend!"
+             ></apx-chart>
+           </div>
+
+           <!-- Data Table -->
+           <div class="chart-data-table">
+             <table class="data-table">
+               <thead>
+                 <tr>
+                   <th></th>
+                   <th>2022</th>
+                   <th>2023</th>
+                   <th>2024</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr>
+                   <td class="row-label">Period Ended</td>
+                   <td>{{ investmentFirm?.aumData?.year2022?.periodEnded || 'N/A' }}</td>
+                   <td>{{ investmentFirm?.aumData?.year2023?.periodEnded || 'N/A' }}</td>
+                   <td>{{ investmentFirm?.aumData?.year2024?.periodEnded || 'N/A' }}</td>
+                 </tr>
+                 <tr>
+                   <td class="row-label">Assets Under Management($M)*</td>
+                   <td>{{ investmentFirm?.aumData?.year2022?.assetsUnderManagementMillion || 'N/A' }}</td>
+                   <td>{{ investmentFirm?.aumData?.year2023?.assetsUnderManagementMillion || 'N/A' }}</td>
+                   <td>{{ investmentFirm?.aumData?.year2024?.assetsUnderManagementMillion || 'N/A' }}</td>
+                 </tr>
+                 <tr>
+                   <td class="row-label">Growth Rate</td>
+                   <td>{{ investmentFirm?.aumData?.year2022?.growthRate || 'N/A' }}</td>
+                   <td>{{ investmentFirm?.aumData?.year2023?.growthRate || 'N/A' }}</td>
+                   <td>{{ investmentFirm?.aumData?.year2024?.growthRate || 'N/A' }}</td>
+                 </tr>
+               </tbody>
+             </table>
+             <p class="table-note">*Assets Under Management are derived from Form ADV</p>
+           </div>
+        </div>
+        
+        <!-- Corporate Data Panel -->
+        <div class="corporate-data-panel">
+          <h3 class="panel-title">Corporate Data</h3>
+          
+          <!-- Company Data Section -->
+          <div class="data-section">
+            <h4 class="data-section-title">Company Data</h4>
+            <div class="data-grid">
+              <div class="data-item">
+                <span class="data-label">Month of Year End</span>
+                <span class="data-value">{{ investmentFirm?.corporateData?.monthOfYearEnd || 'N/A' }}</span>
+              </div>
+              <div class="data-item">
+                <span class="data-label">Investor Type</span>
+                <span class="data-value">{{ investmentFirm?.corporateData?.investorType || 'N/A' }}</span>
+              </div>
+              <div class="data-item">
+                <span class="data-label">Fund Types Managed</span>
+                <span class="data-value">{{ (investmentFirm?.corporateData?.fundTypesManaged || []).join(', ') || 'N/A' }}</span>
+              </div>
+              <div class="data-item">
+                <span class="data-label">Categories</span>
+                <span class="data-value">{{ (investmentFirm?.corporateData?.categories || []).join(', ') || 'N/A' }}</span>
+              </div>
+              <div class="data-item">
+                <span class="data-label">Local Registry ID</span>
+                <span class="data-value">{{ investmentFirm?.corporateData?.localRegistryId || 'N/A' }}</span>
+              </div>
+              <div class="data-item">
+                <span class="data-label">Date of Incorporation</span>
+                <span class="data-value">{{ investmentFirm?.corporateData?.dateOfIncorporation || 'N/A' }}</span>
+              </div>
+              <div class="data-item">
+                <span class="data-label">SIC Code</span>
+                <span class="data-value">{{ investmentFirm?.corporateData?.sicCode || 'N/A' }}</span>
+              </div>
+              <div class="data-item">
+                <span class="data-label">NAICS Code</span>
+                <span class="data-value">{{ investmentFirm?.corporateData?.naicsCode || 'N/A' }}</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Company Description -->
+          <div class="data-section">
+            <h4 class="data-section-title">Company Description</h4>
+            <p class="company-description-text">{{ investmentFirm?.companyDescription || 'N/A' }}</p>
+          </div>
+
+          <!-- Contact Information -->
+          <div class="data-section">
+            <h4 class="data-section-title">Contact</h4>
+            <div class="contact-grid">
+              <div class="contact-column">
+                <h5 class="contact-subtitle">HEADQUARTERS</h5>
+                <div class="contact-address">
+                  <p>{{ investmentFirm?.contactData?.headquarters || 'N/A' }}</p>
+                </div>
+              </div>
+              <div class="contact-column">
+                <h5 class="contact-subtitle">PHONE</h5>
+                <p class="contact-phone">{{ investmentFirm?.contactData?.phone || 'N/A' }}</p>
+                
+                <h5 class="contact-subtitle">WEB ADDRESS</h5>
+                <a [href]="(investmentFirm?.contactData?.webAddress && investmentFirm?.contactData?.webAddress !== 'N/A' ? investmentFirm?.contactData?.webAddress : '#')" target="_blank" class="contact-web">
+                  {{ investmentFirm?.contactData?.webAddress || 'N/A' }}
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

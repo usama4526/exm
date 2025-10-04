@@ -1,0 +1,31 @@
+/* src/app/app.component.scss */
+.tree-grid {
+  /* 1/2/3 columns, column‑first */
+  column-count: 1;
+  column-gap: 3rem;
+
+  @media (min-width: 576px) {
+    column-count: 2;
+  }
+  @media (min-width: 992px) {
+    column-count: 3;
+  }
+
+  /* ensure items don’t break and get equal vertical margins */
+  > app-tree-node {
+    /* fill the column’s width */
+    //display: inline-block;
+    width: 100%;
+
+    /* never break inside or to the next column */
+    break-inside: avoid-column;
+    -webkit-column-break-inside: avoid;
+    page-break-inside: avoid;
+
+    /* consistent vertical gutter between items */
+    margin-bottom: 50px;
+  }
+  > app-tree-node:first-child{
+    margin-bottom: 10px;
+  }
+}

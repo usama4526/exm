@@ -1,0 +1,195 @@
+<div class="mian-list-content" style="position: sticky; top: 0; z-index: 100">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-8" style="background: black; padding-bottom: 15px">
+        <div class="heading_sub">
+          <h2>Selected Criteria</h2>
+        </div>
+
+        <div class="main_list_wrapers">
+          @for (table of criteriaTableData; track $index) {
+          <div class="list_item">
+            <div class="number_point">{{ $index + 1 }}</div>
+            <div style="
+                display: flex;
+                gap: 5px;
+                margin-left: 15px;
+                min-width: 25px;
+              ">
+              <!-- Up arrow - only show if row can move up -->
+              @if (canMoveUp($index)) {
+              <div class="up-arrow" style="width: 12px; fill: white; cursor: pointer" (click)="moveRowUp($index)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                  <path
+                    d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2 160 448c0 17.7 14.3 32 32 32s32-14.3 32-32l0-306.7L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
+                </svg>
+              </div>
+              }
+
+              <!-- Down arrow - only show if row can move down -->
+              @if (canMoveDown($index)) {
+              <div class="down-arrow" style="width: 12px; fill: white; cursor: pointer" (click)="moveRowDown($index)">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                  <path
+                    d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8 12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
+                </svg>
+              </div>
+              }
+            </div>
+
+            <div class="list_content_areas">
+              <div class="arrow_box"></div>
+              <div class="list_inner_content position_shift">
+                <h4 style="line-height: 20px">
+                  <!-- Show clickable placeholder text when display array is empty -->
+                  
+                    <span style="font-size: 14px; ">{{ table.type }}:
+                    </span>
+                    @if (table.type === 'Financial Investor Profile') {
+                      @if(table.display.length===0){
+
+                        <span class="placeholder-text clickCriteria" (click)="showCriteria(table.type)"
+                        style="cursor: pointer; font-size: 14px">
+                        Select Here</span>
+                        <span style="color: red">*</span>
+                      }
+                    } @else if (table.type === 'Financial Investment Preference') {
+                      @if (table.display.length=== 0) {
+                        <span class="placeholder-text clickCriteria" (click)="showCriteria(table.type)"
+                        style="cursor: pointer; font-size: 14px">
+                        Select Here</span>
+                        <span style="color: red">*</span>
+                      }
+                    } @else if (table.isQuantitative) {
+                      @if (table.display.length=== 0) {
+                        <span class="placeholder-text" style="font-size: 14px; color: #999;">
+                        Add criteria using search above</span>
+                      }
+                    }
+            
+                  <!-- Show actual selections when display array has items -->
+                  @if (table.isQuantitative) {
+                    @for (criteria of table.display; let last = $last; track criteria.id;) {
+                    <span style="font-weight: 500; color: white;">{{ criteria.name }}</span>
+                    @if (criteria.minValue !== null || criteria.maxValue !== null) {
+                      <span style="color: white; margin-left: 8px;">
+                        min: {{ criteria.minValue !== null ? criteria.minValue : '' }}
+                        <span style="margin: 0 4px;"> </span>
+                        max: {{ criteria.maxValue !== null ? criteria.maxValue : '' }}
+                      </span>
+                    }
+                    @if (!last) { <br> }
+                    }
+                  } @else {
+                    @for (s of table.display; let last = $last; track $index;) {
+                    <span >{{ s }}@if(table.type.includes('Sector') ||
+                      table.type.includes('Location')){ } @else {
+                       }@if (!last){<span>; </span>}</span>
+                    <!-- Debug: {{ table.type }} -->
+                    }
+                  } 
+                </h4>
+              </div>
+
+              <div class="action_price_section">
+                <!-- Always render count container to maintain consistent spacing -->
+                <h4 style="min-width: 60px; text-align: right">
+                  @if (table.count == 'Loading') {
+                  <span class="loader"></span>
+                  } @else if (table.count != null) {
+                  <span [countUp]="table.count"></span>
+                  }
+                  <!-- When count is null, the h4 remains empty but still takes up space -->
+                </h4>
+
+                <a class="delete_link" (click)="showCriteria(table.type, table)" style="cursor: pointer">
+                  <svg style="fill: white; width: 15px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                      d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-96c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32L96 448c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 64z" />
+                  </svg>
+                </a>
+
+                <!-- Always reserve space for delete icon to maintain consistent alignment -->
+                <a class="delete_link" style="cursor: pointer" [style.visibility]="
+                    table.count != null ? 'visible' : 'hidden'
+                  " (click)="deleteRow(table)">
+                  <span>
+                    <img src="./img/delete.png" alt="" />
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+          }
+
+          <div class="list_item list_border_none">
+            <!-- <div class="number_point"></div>
+            <div class="drag_options"></div> -->
+            <div class="list_content_areas">
+              <!-- <div class="arrow_box">
+                <h2>Add Criteria</h2>
+              </div> -->
+
+              <div class="d-flex" style="width: 83%">
+                <div class="list_inner_content search_parent only_input_border">
+                  <div class="search_input" [class.dropdown-open]="isInvestorDropdownOpen">
+                    <input type="text" placeholder="Add Additional Investor Criteria" class="search_box"
+                      [(ngModel)]="searchTextInvestor" (input)="onInvestorSearchInput($event)" (focus)="onInvestorSearchFocus()"
+                      (keydown)="onInvestorKeyDown($event)" autocomplete="off" />
+
+                    <!-- Clear button when text is entered -->
+                    <span *ngIf="searchTextInvestor" class="clear_icon" (click)="clearInvestorDropdownSearch()" title="Clear search">
+                      <img src="./img/delete.png" alt="" style="width: 12px" />
+                    </span>
+
+                    <!-- Dropdown -->
+                    <div *ngIf="isInvestorDropdownOpen && filteredInvestorCriteria.length > 0" class="criteria-dropdown">
+                      <div class="dropdown-header">
+                        <small class="text-muted">{{ filteredInvestorCriteria.length }} result(s) found</small>
+                      </div>
+                      <div *ngFor="let criteria of filteredInvestorCriteria; let i = index" class="dropdown-item"
+                        [class.highlighted]="i === highlightedInvestorIndex" (click)="selectInvestorDropdownCriteria(criteria)"
+                        (mouseenter)="highlightedInvestorIndex = i">
+                        <div class="item-name">{{ criteria.name }}</div>
+                      </div>
+                    </div>
+
+                    <!-- No results message -->
+                    <div *ngIf="
+                        isInvestorDropdownOpen &&
+                        filteredInvestorCriteria.length === 0 &&
+                        searchTextInvestor
+                      " class="criteria-dropdown no-results">
+                      <div class="dropdown-item disabled">
+                        No criteria found for "{{ searchTextInvestor }}"
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="action_price_section">
+                  <div class="add_button_wraper">
+                    <button
+                      (click)="addDropdownCriteria()"
+                      [disabled]="!selectedDropdownCriteria"
+                      [class.disabled]="!selectedDropdownCriteria"
+                    >
+                      Add
+                    </button>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+            <div class="butto_submit_wraper" style="width: 10%">
+              <button class="submit_button" (click)="getInvestorsCluster()">
+                View Results
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit popup removed per requirements -->

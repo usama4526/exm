@@ -1,0 +1,265 @@
+/* range-slider.component.scss */
+.timeline-slider-container {
+  width: 100%;
+  max-width: 600px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  user-select: none;
+}
+
+.timeline-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #2d3748;
+  border-radius: 6px;
+  padding: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.nav-button {
+  width: 24px;
+  height: 40px;
+  background: #4a5568;
+  border: 1px solid #2d3748;
+  border-radius: 4px;
+  color: #a0aec0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+
+  &:hover:not(:disabled) {
+    background: #5a6c7d;
+    color: #e2e8f0;
+    border-color: #4a5568;
+  }
+
+  &:active:not(:disabled) {
+    background: #3a4a5c;
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 8px;
+    height: 12px;
+  }
+}
+
+.timeline-container {
+  flex: 1;
+  position: relative;
+  height: 40px;
+  background: #1a202c;
+  border-radius: 4px;
+  overflow: visible;
+  padding: 0 0px; /* Add horizontal padding to keep labels inside */
+}
+
+.timeline-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #1a202c;
+}
+
+.timeline-years {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.year-item {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  min-width: 16px; /* Ensure minimum width for label */
+
+  // Special handling for first and last items to prevent overflow
+  &:first-child {
+    transform: translateX(0); /* Align left edge for first item */
+  }
+
+  &:last-child {
+    transform: translateX(-100%); /* Align right edge for last item */
+  }
+
+  &.selected {
+    .year-label {
+      color: #63b3ed;
+      font-weight: 600;
+    }
+    .year-tick {
+      background: #63b3ed;
+      height: 6px;
+    }
+  }
+}
+
+.year-tick {
+  width: 1px;
+  height: 4px;
+  background: #4a5568;
+  margin-bottom: 2px;
+  transition: all 0.2s ease;
+}
+
+.year-label {
+  font-size: 11px;
+  color: #a0aec0;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.range-highlight {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: rgba(99, 179, 237, 0.15);
+  border-top: 2px solid #63b3ed;
+  border-bottom: 2px solid #63b3ed;
+  cursor: col-resize;
+  transition: all 0.1s ease;
+
+  &:hover {
+    background: rgba(99, 179, 237, 0.25);
+    border-top-color: #4299e1;
+    border-bottom-color: #4299e1;
+  }
+
+  &:active {
+    cursor: grabbing;
+    background: rgba(99, 179, 237, 0.3);
+  }
+}
+
+.boundary-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e53e3e;
+  cursor: col-resize;
+  z-index: 10;
+  transition: all 0.1s ease;
+
+  &:hover {
+    background: #fc8181;
+    width: 3px;
+    transform: translateX(-0.5px);
+    
+    .boundary-handle {
+      opacity: 1;
+      transform: translateY(-50%) scale(1.1);
+    }
+  }
+
+  &.boundary-left {
+    transform: translateX(-1px);
+  }
+
+  &.boundary-right {
+    transform: translateX(-1px);
+  }
+}
+
+.boundary-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: #e53e3e;
+  border: 1px solid #c53030;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0.8;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.boundary-label {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: #e53e3e;
+  font-weight: 600;
+  background: #1a202c;
+  padding: 1px 4px;
+  border-radius: 2px;
+  border: 1px solid #e53e3e;
+  white-space: nowrap;
+  opacity: 0.9;
+  transition: all 0.2s ease;
+}
+
+.boundary-line:hover .boundary-label {
+  color: #fc8181;
+  border-color: #fc8181;
+  opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .timeline-slider-container {
+    max-width: 100%;
+  }
+  
+  .timeline-wrapper {
+    gap: 6px;
+    padding: 6px;
+  }
+  
+  .nav-button {
+    width: 20px;
+    height: 36px;
+  }
+  
+  .year-label {
+    font-size: 10px;
+  }
+  
+  .boundary-label {
+    font-size: 9px;
+  }
+}
+
+/* Dragging States */
+.boundary-line {
+  &:active,
+  &.dragging {
+    background: #fc8181;
+    width: 3px;
+    
+    .boundary-handle {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.2);
+      background: #fc8181;
+    }
+    
+    .boundary-label {
+      color: #fc8181;
+      border-color: #fc8181;
+      opacity: 1;
+      font-weight: 700;
+    }
+  }
+}

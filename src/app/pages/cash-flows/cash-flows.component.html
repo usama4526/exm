@@ -1,0 +1,267 @@
+<!-- Sub Navigation -->
+<div class="flex flex-col md:flex-row">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  <!-- Main Content -->
+  <div class="flex-grow overflow-x-auto">
+    <div
+      class="bg-gray-900 border-b border-gray-800 px-6 py-3 flex flex-col md:flex-row justify-between"
+    >
+      <div>
+        <div class="d-flex align-items-center gap-2">
+          <h1 class="text-lg font-semibold" style="color: #e53e3e">
+            {{ companyDetails.companyName }}
+          </h1>
+          |
+          <p class="text-lg" style=" letter-spacing: 0.5px">
+            Cash Flow Statement
+          </p>
+        </div>
+        <p class="text-md mt-1" style="text-align: left">
+          {{ companyDetails.exchange }}: {{ companyDetails.ticker }}
+        </p>
+        @if(hasResponse && financials && financials.length == 0){
+        <p style="color: #e53e3e; margin-top: 20px">
+          {{ companyDetails.companyName }} has no cash flow data during the
+          period of 2015-2024
+        </p>
+        }
+      </div>
+      <app-range-slider
+        style="width: 40%;"
+        [min]="2015"
+        [max]="2024"
+        [initialMin]="2015"
+        [initialMax]="2024"
+        (valueChange)="onRangeChange($event)"
+      >
+      </app-range-slider>
+      <div class="flex flex-wrap gap-2 mt-3 md:mt-0 items-start">
+        <!-- <button
+              class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm whitespace-nowrap"
+            >
+              Create Alert
+            </button> -->
+        <div class="relative">
+          <!-- <button
+                class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm flex items-center whitespace-nowrap"
+              >
+                Add to
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M8.00002 11.3333C7.82936 11.3333 7.65867 11.268 7.52867 11.138L2.862 6.47137C2.60134 6.2107 2.60134 5.78933 2.862 5.52866C3.12267 5.26799 3.54405 5.26799 3.80471 5.52866L8.00002 9.72397L12.1953 5.52866C12.456 5.26799 12.8774 5.26799 13.138 5.52866C13.3987 5.78933 13.3987 6.2107 13.138 6.47137L8.47138 11.138C8.34138 11.268 8.17069 11.3334 8.00002 11.3334Z" fill="white"/>
+                </svg>
+                </span>
+              </button> -->
+        </div>
+        <!-- <button
+              class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm whitespace-nowrap"
+            >
+              Print
+            </button> -->
+
+        <div class="relative">
+          <button
+            class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm flex items-center whitespace-nowrap"
+          >
+            Export
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M8.00002 11.3333C7.82936 11.3333 7.65867 11.268 7.52867 11.138L2.862 6.47137C2.60134 6.2107 2.60134 5.78933 2.862 5.52866C3.12267 5.26799 3.54405 5.26799 3.80471 5.52866L8.00002 9.724L12.1953 5.52866C12.456 5.26799 12.8774 5.26799 13.138 5.52866C13.3987 5.78933 13.3987 6.2107 13.138 6.47137L8.47138 11.138C8.34138 11.268 8.17069 11.3333 8.00002 11.3333Z"
+                  fill="white"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div class="relative">
+          <button
+            class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm flex items-center whitespace-nowrap"
+          >
+            Links
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M8.00002 11.3333C7.82936 11.3333 7.65867 11.268 7.52867 11.138L2.862 6.47137C2.60134 6.2107 2.60134 5.78933 2.862 5.52866C3.12267 5.26799 3.54405 5.26799 3.80471 5.52866L8.00002 9.724L12.1953 5.52866C12.456 5.26799 12.8774 5.26799 13.138 5.52866C13.3987 5.78933 13.3987 6.2107 13.138 6.47137L8.47138 11.138C8.34138 11.268 8.17069 11.3333 8.00002 11.3333Z"
+                  fill="white"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <button
+          class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm whitespace-nowrap"
+        >
+          Build a Report
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-4">
+        <!-- <ngx-slider [(highValue)]="highValue" [(value)]="value" [options]="options"></ngx-slider> -->
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <div class="p-6 shade_box">
+      <div class="mb-8">
+        <div>
+          <table class="table table-dark w-full" style="margin-bottom: 0px !important;">
+            <thead>
+              <tr class="table-header">
+                <th class="table-cell text-left" style="min-width: 120px"></th>
+                <th
+                  *ngFor="let h of financials[0]?.headers; let i = index"
+                  class="table-cell text-right"
+                  [style.padding-right.px]="
+                    i === financials[0]?.headers.length - 1 ? 20 : null
+                  "
+                >
+                  {{ h.year }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="table-row border-b border-gray-800 period-ended-row"
+                style="
+                  border-bottom: 1px solid var(--Gray-Black-100, #d2d2d5) !important;
+                "
+              >
+                <td class="table-cell text-left" style="min-width: 120px">
+                  Period Ended
+                </td>
+                <td
+                  *ngFor="let h of financials[0]?.headers; let i = index"
+                  class="table-cell text-right period-ended-date white-text"
+                  [style.font-weight]="'500'"
+                  [style.padding-right.px]="
+                    i === financials[0]?.headers.length - 1 ? 20 : null
+                  "
+                >
+                  {{ getPeriodEndedDate(h.year) }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Income Statement Section -->
+            <div  *ngFor="let f of financials; let i = index">
+            <div class="overflow-x-auto">
+              <table class="table table-dark table w-full min-w-max" style="margin-bottom: 0px !important;">
+                <thead>
+                  <tr class="table-header">
+                    <th class="table-cell text-left" style="border-right:1px solid #3e3e3e">{{ f.table_label }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let row of f.data">
+                    <ng-container
+                      *ngTemplateOutlet="
+                        renderRow;
+                        context: {
+                          $implicit: row,
+                          headers: f.headers,
+                          level: 0
+                        }
+                      "
+                    ></ng-container>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #popContent>
+  <span style="color: black; font-size: 12px">{{ popoverContent }}</span>
+</ng-template>
+
+<ng-template #popTitle>
+  <span style="font-weight: bold; color: black; font-size: 13px">{{
+    popoverTitle
+  }}</span>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <!-- <h4 class="modal-title" id="modal-basic-title">S&P Capital IQ</h4> --> 
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <iframe #docViewer style="width: 100%; height: 80vh; border: none"></iframe>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button custom-btn"
+      style="
+        width: 120px !important;
+        height: 35px !important;
+        background-color: #0d6efd !important;
+        color: #fff !important;
+      "
+      class="btn btn-primary"
+      (click)="modal.close('Save click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>
+
+<!-- Recursive row rendering template -->
+<ng-template #renderRow let-row let-headers="headers" let-level="level">
+  <tr>
+    <td
+      [style.paddingLeft.px]="level * 20"
+      style="
+        background: #23232b;
+        color: #fff;
+        font-size: 13px;
+        width: 300px !important;
+      "
+    >
+      <span [ngbTooltip]="row.row_head_label">{{ row.row_head_label }}</span>
+    </td>
+    <td
+      *ngFor="let value of row.data; let i = index; let last = last"
+      [ngClass]="{ 'no-val': !value || (value && !value.val) }"
+      class="table-cell text-right pointer"
+      [class.pointer]="value && value.val && value?.val != 0"
+      [style.color]="getCellColor(value?.val)"
+     
+    >
+      {{ value && value.val | formatNumber : "thousands" }}
+    </td>
+  </tr>
+  <ng-container *ngIf="row.children">
+    <ng-container *ngFor="let child of row.children">
+      <ng-container
+        *ngTemplateOutlet="
+          renderRow;
+          context: { $implicit: child, headers: headers, level: level + 1 }
+        "
+      ></ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>

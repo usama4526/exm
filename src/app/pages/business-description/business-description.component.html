@@ -1,0 +1,79 @@
+<div class="pages">
+  <!-----------------main-list-container------------->
+
+  <!------------------feature item-list------------------------->
+  <div class="feature_list_wraper data_margin">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="filter_container">
+            <div class="inner_filter_container">
+              <div class="filter_section">
+                <div class="filter_main_data">
+                  <div
+                    class="sector-container"
+                    style="padding-left: 0; padding-right: 0"
+                  >
+                    <form>
+                      <div class="mb-3 custom_inputs">
+                        <!-- <label for="comment" class="mb-3">Business Description:</label> -->
+                        <textarea
+                          class="form-control"
+                          rows="5"
+                          id="comment"
+                          name="text"
+                          placeholder="Text"
+                        ></textarea>
+                      </div>
+                      <div class="mb-3 mt-3 custom_inputs">
+                        <div class="form-check">
+                          <!-- <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked> -->
+                          <span class="form_icon">
+                            <img src="./img/and.svg" alt="" srcset="" />
+                          </span>
+                          And
+                          <span>
+                            (Requires all listed keywords to be present in the
+                            company description)</span
+                          >
+                          <label class="form-check-label" for="radio1"></label>
+                        </div>
+                        <div class="form-check">
+                          <!-- <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2"> -->
+                          <span class="form_icon">
+                            <img src="./img/or.svg" alt="" srcset="" />
+                          </span>
+                          OR
+                          <span>
+                            (Allows for any of the listed keywords to be present
+                            in the company description)</span
+                          >
+                          <label class="form-check-label" for="radio2"></label>
+                        </div>
+                        <div class="form-check">
+                          <!-- <input type="radio" class="form-check-input" id="radio3" name="optradio" value="option3"> -->
+                          <span class="form_icon">
+                            <img src="./img/not-and-not.svg" alt="" srcset="" />
+                          </span>
+                          NOT
+                          <span>
+                            (Excludes results that contain the specified
+                            keyword)</span
+                          >
+                          <label class="form-check-label"></label>
+                        </div>
+                      </div>
+                      <button type="submit" class="custom_search">
+                        Search
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

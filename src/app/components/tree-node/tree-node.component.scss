@@ -1,0 +1,38 @@
+.node-row {
+  align-items: center;
+}
+.form-check {
+  padding-left: 0.5em;
+}
+
+.form-check-label:hover {
+  color: #007bff !important;
+}
+
+/* Custom checkbox styles */
+.checkbox-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.checkbox-icon svg {
+  width: 16px;
+  height: 16px;
+  fill: #c9c9c9;
+}
+
+.checkbox-icon.checked svg {
+  fill: #007bff;
+}
+
+.node-row {
+  display: flex;
+}
+

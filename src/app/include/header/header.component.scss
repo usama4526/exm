@@ -1,0 +1,128 @@
+.header_section {
+  position: relative;
+  z-index: 999;
+  background: var(--primary-bg);
+  height: 100px;
+  line-height: 100px;
+  .site_logo {
+    a {
+      span {
+        img {
+          width: 160px;
+        }
+      }
+    }
+  }
+  .main_menus {
+    height: 100%;
+    ul {
+      padding-left: 0px;
+      margin-bottom: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      li {
+        list-style: none;
+        a {
+          color: var(--color-primary);
+          font-family: var(--font-base);
+          font-size: 18px;
+          font-style: normal;
+          //font-weight: var(--font-weight-700);
+          line-height: 1;
+          text-decoration: none;
+          padding: 3px 10px;
+        }
+        a.active {
+          color: red;
+        }
+      }
+    }
+  }
+  .right_site_logo {
+    a {
+      span {
+        img {
+          width: 160px;
+        }
+      }
+    }
+  }
+}
+
+.mobile_menu {
+  display: none;
+}
+.mobile_menu a {
+  font-size: 26px;
+  color: #fff;
+}
+.mobile_menu_container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: #000;
+  z-index: 999999;
+  top: 0;
+  bottom: 0;
+}
+a.close_btn {
+  color: #fff;
+  font-size: 30px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+.mobile_menu_container {
+  .main_menus {
+    margin-top: 100px;
+
+    > ul {
+      padding-left: 0;
+      list-style: none;
+      text-align: center;
+
+      li {
+        margin-bottom: 20px;
+
+        a {
+          text-decoration: none;
+          color: #fff;
+          font-family: var(--font-base);
+          font-size: var(--font-size-menu-text);
+        }
+      }
+    }
+  }
+}
+.container-fluid {
+  padding: 0px 50px !important;
+}
+.right_site_logo.text-right {
+  text-align: right;
+}
+@media only screen and (max-width: 999px) and (min-width: 300px) {
+  .container-fluid {
+    padding: 0px 14px !important;
+  }
+  .mobile_controller {
+    display: none;
+  }
+  .header_section .right_site_logo a span img {
+    width: 100%;
+  }
+  .header_section .site_logo a span img {
+   // width: 100%;
+    max-width: 100%;
+  }
+  .mobile_flex {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end;
+  }
+  .mobile_menu {
+    display: block;
+  }
+}

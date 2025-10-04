@@ -1,0 +1,25 @@
+<div class="select-all-container">
+  <label class="select-all-label">
+    <div class="toggle-switch">
+      <input
+        type="checkbox"
+        (change)="selectAll($any($event.target).checked)"
+        class="toggle-switch-input"
+      />
+      <span class="toggle-switch-slider"></span>
+    </div>
+    <span class="select-all-text">Select All</span>
+  </label>
+  
+  
+</div>
+
+<div class="exchanges-grid">
+  @for (ex of exchanges; track ex) {
+  <label class="exchange-item">
+    <input type="checkbox" [checked]="isChecked(ex)" (change)="toggleExchange(ex, $any($event.target).checked)" />
+    <span style="cursor: pointer;">{{ ex }}</span>
+  </label>
+  }
+</div>
+

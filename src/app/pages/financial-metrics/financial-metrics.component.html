@@ -1,0 +1,190 @@
+<img src="./img/fbg.png" class="wrape_img" />
+<div class="pages">
+  <div class="sub_header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="company_title d-flex align-items-center">
+            <h4>Company Screening</h4>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="d-flex width-100 gap-4">
+            <div class="chat_exp_btn">
+              <button>Chat ExM</button>
+            </div>
+            <div class="sq_tool d-flex align-items-center">
+              <a
+                >Sequoia
+                <span>
+                  <img src="./img/g_logo.png" alt="" class="g_logo" />
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+    </div>
+  </div>
+  <!-----------------main-list-container------------->
+  <criteria></criteria>
+  <!------------------feature item-list------------------------->
+  <div class="feature_list_wraper data_margin">
+    <div class="container-fluid">
+      <div class="filter_container">
+        <div class="inner_filter_container">
+          <div class="filter_section">
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="filter_header mb-3 d-flex">
+                  <span class="icon_header">
+                    <img src="./img/clock.png" alt="" />
+                  </span>
+                  <h3>Financial Metrics</h3>
+                  <a routerLink="" class="close_del">
+                    <i class="fa-solid fa-xmark"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="filter_main_data">
+              <div class="sector-container">
+                <div class="form_boxs">
+                  <div class="form_item">
+                    <div class="row">
+                      <div class="col-lg-8">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="row filter-row only_this_field gap-4">
+                              <div class="col-md-2 filter-label">
+                                <br />
+                                Revenue $000
+                              </div>
+                              <div class="col-md-3">
+                                <div class="center_tex_hd">
+                                  <h4 class="text-center">Min</h4>
+                                </div>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder=""
+                                  value=""
+                                  (change)="onValueChange($event, 'min', 0)"
+                                />
+                              </div>
+                              <div class="col-md-3">
+                                <div class="center_tex_hd">
+                                  <h4 class="text-center">Max</h4>
+                                </div>
+                                <input
+                                  type="number"
+                                  class="form-control"
+                                  placeholder=""
+                                  (change)="onValueChange($event, 'min', 0)"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="row filter-row only_this_field gap-4">
+                              <div class="col-md-2 filter-label">
+                                EBITDA ('$000)
+                              </div>
+                              <div class="col-md-3">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder=""
+                                  value=" "
+                                  (change)="onValueChange($event, 'min', 1)"
+                                />
+                              </div>
+                              <div class="col-md-3">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder=""
+                                  (change)="onValueChange($event, 'max', 1)"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="row filter-row only_this_field gap-4">
+                              <div class="col-md-2 filter-label">
+                                Net Income ('$000)
+                              </div>
+                              <div class="col-md-3">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder=""
+                                  value=" "
+                                  (change)="onValueChange($event, 'min', 2)"
+                                />
+                              </div>
+                              <div class="col-md-3">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder=""
+                                  (change)="onValueChange($event, 'max', 2)"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="row filter-row only_this_field gap-4">
+                              <div class="col-md-2 filter-label">
+                                Enterprise Value ('$000)
+                              </div>
+                              <div class="col-md-3">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder=""
+                                  value=" "
+                                  (change)="onValueChange($event, 'min', 3)"
+                                />
+                              </div>
+                              <div class="col-md-3">
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder=""
+                                  (change)="onValueChange($event, 'max', 3)"
+                                />
+                              </div>
+                            </div>
+
+                            <div class="row filter-row only_this_field gap-4">
+                              <div class="col-md-2 filter-label">
+                                Fiscal Period
+                              </div>
+                              <div class="col-md-3">
+                                <input
+                                  type="date"
+                                  class="form-control date-input"
+                                  placeholder="From"
+                                />
+                              </div>
+                              <div class="col-md-3">
+                                <input
+                                  type="date"
+                                  class="form-control date-input"
+                                  placeholder="To"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

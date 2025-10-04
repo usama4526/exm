@@ -1,0 +1,61 @@
+<div class="w-full md:w-56 bg-blacks border-r border-gray-800 flex-shrink-0">
+  <div >
+    <!-- Key Insights - Static item -->
+
+
+    <!-- Expansion Panels -->
+    <div class="expansion-panels">
+      <div 
+        *ngFor="let section of menuSections; let i = index" 
+        class="expansion-panel"
+        [class.expanded]="section.expanded"
+      >
+        <!-- Panel Header -->
+        <div 
+          class="panel-header"
+          (click)="toggleSection(i)"
+        >
+          <span class="panel-title">{{ section.title }}</span>
+          <div class="expand-icon" [class.expanded]="section.expanded">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Panel Content -->
+        <div class="panel-content" [class.expanded]="section.expanded">
+          <ng-container *ngFor="let item of section.items; let j = index">
+            <!-- Parent row -->
+            <div
+              class="panel-item"
+              [class.active]="isActive(item.route)"
+              [class.disabled]="!item.children?.length && (!item.route || item.route === '#')"
+              (click)="item.children?.length ? toggleItem(i, j) : navigate(item.route || '#')"
+            >
+              <span class="item-label">{{ item.label }}</span>
+              <div class="expand-icon" *ngIf="item.children?.length" [class.expanded]="item.expanded">
+                <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                  <path d="M6 12L10 8L6 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Children list -->
+            <div class="subitems" *ngIf="item.children?.length" [class.expanded]="item.expanded">
+              <a
+                *ngFor="let child of item.children"
+                (click)="navigate(child.route || '#')"
+                class="panel-subitem"
+                [class.active]="isActive(child.route)"
+                [class.disabled]="!child.route || child.route === '#'"
+              >
+                <span class="item-label">{{ child.label }}</span>
+              </a>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

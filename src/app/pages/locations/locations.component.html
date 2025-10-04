@@ -1,0 +1,23 @@
+<div class="select-all-container">
+  <label class="select-all-label">
+    <div class="toggle-switch">
+      <input
+        type="checkbox"
+        [checked]="selectAllChecked"
+        (change)="onSelectAllChange($event)"
+        class="toggle-switch-input"
+      />
+      <span class="toggle-switch-slider"></span>
+    </div>
+    <span class="select-all-text">Select All</span>
+  </label>
+</div>
+
+<app-nested-checkboxes
+  [checkboxData]="locationsData"
+  label="Locations"
+  (selectionChange)="onLocationSelectionChange($event)"
+  [clearLocationSelection]="clearLocationSelection"
+  (onClearLocationSelection)="onClearLocation($event)"
+>
+</app-nested-checkboxes>

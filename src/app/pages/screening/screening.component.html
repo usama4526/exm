@@ -1,0 +1,871 @@
+<img src="./img/bg-backup.png" class="wrape_img" />
+<div class="pages">
+  <div class="sub_header">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-2">
+          <div class="company_title d-flex align-items-center">
+            <h4>Company Screening</h4>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="d-flex width-100 gap-4">
+            <div
+              class="chat_exp_btn company_search_container"
+              style="position: relative; width: 50%"
+            >
+              <input
+                class="company_search_input"
+                type="text"
+                placeholder="Search Company"
+                [(ngModel)]="searchQuery"
+                (input)="onCompanySearchInput($event)"
+                (keydown)="onCompanySearchKeydown($event)"
+                (focus)="onCompanySearchFocus()"
+                style="
+                  background-color: #3d3d3d;
+                  color: white;
+                  border: none;
+                  height: 40px;
+                  border: 2px solid #3d3d3d;
+                  padding: 5px;
+                  padding-right: 35px;
+                  width: 100%;
+                  padding-left: 35px;
+                "
+              />
+              <i
+                class="fa-solid fa-magnifying-glass"
+                style="
+                  color: white;
+                  position: absolute;
+                  left: 3%;
+                  top: 50%;
+                  transform: translateY(-50%);
+                "
+              ></i>
+              <i
+                *ngIf="isLoadingCompanies"
+                class="fa-solid fa-spinner fa-spin"
+                style="
+                  color: white;
+                  position: absolute;
+                  right: 35px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  font-size: 14px;
+                "
+                title="Loading companies..."
+              ></i>
+              <i
+                *ngIf="
+                  searchQuery &&
+                  !isLoadingCompanies &&
+                  filteredCompanies.length === 0
+                "
+                class="fa-solid fa-search"
+                style="
+                  color: #666;
+                  position: absolute;
+                  right: 35px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  font-size: 14px;
+                "
+                title="Searching..."
+              ></i>
+              <i
+                *ngIf="searchQuery && !isLoadingCompanies"
+                class="fa-solid fa-times"
+                style="
+                  color: white;
+                  position: absolute;
+                  right: 35px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  cursor: pointer;
+                  font-size: 14px;
+                "
+                (click)="clearCompanySearch()"
+                title="Clear search"
+              ></i>
+
+              <!-- Company Search Dropdown -->
+              <div
+                class="company_dropdown"
+                *ngIf="
+                  showCompanyDropdown &&
+                  (filteredCompanies.length > 0 ||
+                    (searchQuery.length >= 1 && !isLoadingCompanies))
+                "
+              >
+                <!-- Loading state -->
+                <div *ngIf="isLoadingCompanies" class="dropdown-message">
+                  <i class="fa-solid fa-spinner fa-spin"></i> Loading
+                  companies...
+                </div>
+
+                <!-- Results -->
+                <div
+                  *ngFor="let company of filteredCompanies"
+                  class="dropdown-item"
+                  (click)="onCompanySelect(company)"
+                  [class.selected]="
+                    selectedCompany?.company_id === company.company_id
+                  "
+                >
+                  <div class="company-name">{{ company.company_name }}</div>
+                </div>
+
+                <!-- No results message -->
+                <div
+                  *ngIf="
+                    searchQuery.length >= 1 &&
+                    !isLoadingCompanies &&
+                    filteredCompanies.length === 0
+                  "
+                  class="dropdown-message"
+                >
+                  No companies found matching "{{ searchQuery }}"
+                </div>
+              </div>
+            </div>
+            <div class="sq_tool d-flex align-items-center">
+              <a
+                (click)="selectedCriteriaFilter = 'exchanges'"
+                style="
+                  cursor: pointer;
+                  font-size: 18px;
+                  background: white;
+                  color: black;
+                  height: 35px;
+                  padding: 0 10px;
+                "
+              >
+                Exchange
+              </a>
+            </div>
+            <!-- <div class="sq_tool d-flex align-items-center">
+              <a
+                >Sequoia
+                <span>
+                  <img src="./img/g_logo.png" alt="" class="g_logo" />
+                </span>
+              </a>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+    </div>
+  </div>
+  <!-----------------main-list-container------------->
+  <criteria
+    [selectedSector]="sectorSelection"
+    [minimalSelectedSector]="minimalSectorSelection"
+    [selectedLocation]="locationSelection"
+    [minimalSelectedLocation]="minimalLocationSelection"
+    [selectedCompanyStatus]="selectedCompanyStatus"
+    [selectedCompanyType]="selectedCompanyType"
+    [selectedFinancialMetrics]="selectedFinancialMetrics"
+    (clearSelection)="onClearSelection($event)"
+    (openCriteriaSelector)="showCriteriaSelector($event)"
+    (companiesClusterData)="onRunScreenGetCompaniesClusterData($event)"
+    [dropdownAllCriteria]="categoryData"
+    (changedDropdownCriteria)="onDropdownCriteriaChange($event)"
+    [newCriteriaToAdd]="newCriteriaToAdd"
+    (criteriaPayloadChanged)="onCriteriaPayloadChanged($event)"
+    (runScreenClicked)="onRunScreenClicked()"
+    (criteriaExpanded)="onCriteriaExpanded($event)"
+    (editCriteria)="onEditCriteria($event)"
+    (criteriaDataChanged)="onCriteriaDataChanged($event)"
+  ></criteria>
+  <!------------------feature item-list------------------------->
+  <!-- <div class="feature_list_wraper">
+    <div class="container-fluid">
+      @if (selectedCriteriaFilter == undefined) {
+      <div class="section_header">
+        <h2>Explore Company Criteria Below</h2>
+      </div>
+      <div class="full_row">
+        <div
+          (click)="selectedCriteriaFilter = 'sector-and-industries'"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #3d3d3d;
+            cursor: pointer;
+            border-radius: 32px;
+            padding: 12px;
+          "
+        >
+          <div><img style="width: 40px" src="./img/cog.png" alt="" /></div>
+          <div style="font-size: 18px; color: white">
+            Sectors and Industries
+          </div>
+        </div>
+
+        <div
+          (click)="selectedCriteriaFilter = 'business-description'"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #3d3d3d;
+            cursor: pointer;
+            border-radius: 32px;
+            padding: 12px;
+          "
+        >
+          <div><img style="width: 40px" src="./img/doc-cog.png" alt="" /></div>
+          <div style="font-size: 18px; color: white">Business Description</div>
+        </div>
+ 
+        <div
+          (click)="selectedCriteriaFilter = 'locations'"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #3d3d3d;
+            cursor: pointer;
+            border-radius: 32px;
+            padding: 12px;
+          "
+        >
+          <div><img style="width: 40px" src="./img/glob.png" alt="" /></div>
+          <div style="font-size: 18px; color: white">Locations</div>
+        </div>
+
+       
+      </div>
+      }
+    </div>
+  </div> -->
+
+  <!-- Criteria filter forms -->
+
+  <div class="criteria-filter-container container-fluid">
+    <div>
+      <div
+        [hidden]="selectedCriteriaFilter !== 'sector-and-industries'"
+        class="criteria-filter"
+      >
+        <div class="filter_header mb-4 d-flex align-items-center gap-2">
+          <span class="icon_header">
+            <img
+              style="width: 40px; height: 40px"
+              src="./img/cog.png"
+              alt="Sectors"
+            />
+          </span>
+          <h3 style="color: white; font-size: 18px; margin: 0">
+            Sectors and Industries
+          </h3>
+          <a
+            (click)="selectedCriteriaFilter = undefined"
+            style="color: white; cursor: pointer; padding: 6px"
+          >
+            <i class="fa-solid fa-xmark" style="font-size: 18px"></i>
+          </a>
+        </div>
+        <app-sectors-industries
+          [checkboxData]="sectorData"
+          (selectionChange)="onScreeningSelection($event)"
+          [clearSectorSelection]="clearSectorCheckboxSelection"
+          (onClearSectorSelection)="clearSectorCheckboxSelection = false"
+        ></app-sectors-industries>
+      </div>
+
+      <div
+        [hidden]="selectedCriteriaFilter !== 'business-description'"
+        class="criteria-filter"
+      >
+        <div class="filter_header mb-4 d-flex align-items-center gap-2">
+          <span class="icon_header">
+            <img
+              style="width: 40px; height: 40px"
+              src="./img/cog.png"
+              alt="Sectors"
+            />
+          </span>
+          <h3 style="color: white; font-size: 18px; margin: 0">
+            Sectors and Industries
+          </h3>
+          <a
+            (click)="selectedCriteriaFilter = undefined"
+            style="color: white; cursor: pointer; padding: 6px"
+          >
+            <i class="fa-solid fa-xmark" style="font-size: 18px"></i>
+          </a>
+        </div>
+        <app-business-description></app-business-description>
+      </div>
+
+      <div
+        [hidden]="selectedCriteriaFilter !== 'company-type-and-company-status'"
+        class="criteria-filter"
+      >
+        <div class="filter_header mb-4 d-flex align-items-center gap-2">
+          <span class="icon_header">
+            <img
+              style="width: 40px; height: 40px"
+              src="./img/round.png"
+              alt="Sectors"
+            />
+          </span>
+          <h3 style="color: white; font-size: 18px; margin: 0">
+            Company Type and Company Status
+          </h3>
+          <a
+            (click)="selectedCriteriaFilter = undefined"
+            style="color: white; cursor: pointer; padding: 6px"
+          >
+            <i class="fa-solid fa-xmark" style="font-size: 18px"></i>
+          </a>
+        </div>
+        <app-business-cycles-backing-status
+          (companyTypeChange)="onCompanyType($event)"
+          (companyStatusChange)="onCompanyStatus($event)"
+          [clearCompanySelection]="clearCompanySelection"
+          (onClearCompanySelection)="clearCompanySelection = false"
+        ></app-business-cycles-backing-status>
+      </div>
+
+      <div
+        [hidden]="selectedCriteriaFilter !== 'financial-metrics'"
+        class="criteria-filter"
+      >
+        <div class="filter_header mb-3 d-flex align-items-center gap-2">
+          <span class="icon_header">
+            <img
+              style="width: 40px; height: 40px"
+              src="./img/clock.png"
+              alt=""
+            />
+          </span>
+          <h3 style="color: white; font-size: 18px; margin: 0">
+            Financial Metrics
+          </h3>
+          <a
+            class="close_del"
+            style="color: white; cursor: pointer; padding: 6px"
+            (click)="selectedCriteriaFilter = undefined"
+          >
+            <i class="fa-solid fa-xmark" style="font-size: 18px"></i>
+          </a>
+        </div>
+        <app-financial-metrics
+          (applyMetrics)="onMetricsApplied($event)"
+        ></app-financial-metrics>
+      </div>
+
+      <div
+        [hidden]="selectedCriteriaFilter !== 'locations'"
+        class="criteria-filter"
+      >
+        <div class="filter_header mb-3 d-flex align-items-center gap-2">
+          <span class="icon_header">
+            <img
+              style="width: 40px; height: 40px"
+              src="./img/glob.png"
+              alt=""
+            />
+          </span>
+          <h3 style="color: white; font-size: 18px; margin: 0">Locations</h3>
+          <a
+            class="close_del"
+            style="color: white; cursor: pointer; padding: 6px"
+            (click)="selectedCriteriaFilter = undefined"
+          >
+            <i class="fa-solid fa-xmark" style="font-size: 18px"></i>
+          </a>
+        </div>
+        <app-locations
+          (locationSelected)="onLocationSelectionChange($event)"
+          [clearLocationSelection]="clearLocationCheckboxSelection"
+          (onClearLocationSelection)="clearLocationCheckboxSelection = false"
+        ></app-locations>
+      </div>
+
+      <div
+        [hidden]="selectedCriteriaFilter !== 'exchanges'"
+        class="criteria-filter"
+        style="max-width: 1366px;"
+      >
+        <div class="filter_header mb-3 d-flex align-items-center gap-2">
+          <span class="icon_header">
+            <img
+              style="width: 40px; height: 40px"
+              src="./img/round.png"
+              alt=""
+            />
+          </span>
+          <h3 style="color: white; font-size: 18px; margin: 0">Exchanges</h3>
+          <a
+            class="close_del"
+            style="color: white; cursor: pointer; padding: 6px"
+            (click)="selectedCriteriaFilter = undefined"
+          >
+            <i class="fa-solid fa-xmark" style="font-size: 18px"></i>
+          </a>
+        </div>
+        <app-exchange-criteria
+          (exchangeSelected)="onExchangeSelection($event)"
+          [clearSelection]="clearExchangeSelection"
+          [selectedValues]="selectedExchanges"
+          (onClearSelection)="clearExchangeSelection = false"
+        ></app-exchange-criteria>
+      </div>
+    </div>
+
+    <!-- comapnies table -->
+    <div #companiesCluster>
+      @if (companiesClusterData.length > 0) {
+      <h1 class="my-4" style="color: white; font-size: 18px">Search Results</h1>
+      <div class="container-fluid" style="padding: 0 !important">
+        <div class="my-3">
+          <!-- <button
+            class="submit_button"
+            style="border-radius: 5px; padding: 5px 10px; border: none"
+          >
+            Edit Columns
+          </button> -->
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+          <table class="companies-table">
+            <thead>
+              <tr>
+                <th>Company Name</th>
+                <th>Ticker</th>
+                <th>Exchange</th>
+                @if (shouldShowColumn('sector')) {
+                <th>Sector</th>
+                } @if (shouldShowColumn('geography')) {
+                <th>Country</th>
+                } @if (shouldShowColumn('primaryIndustry')) {
+                <th>Primary Industry</th>
+                } @if(shouldShowColumn('state')){
+                <th>State</th>
+                }
+                <!-- Dynamic financial columns -->
+                @for (column of selectedTableCriteria; track column) { @if
+                (column !== 'sector' && column !== 'geography' && column !==
+                'primaryIndustry' && column !== 'state' && column !== 'exchange') {
+                <th
+                  [style.text-align]="
+                    isNumericColumn(column) ? 'right' : 'left'
+                  "
+                >
+                  {{ getColumnDisplayName(column) }}
+                </th>
+                } }
+              </tr>
+            </thead>
+            <tbody>
+              @for (company of companiesClusterData; track company.id) {
+              <tr>
+                <td>
+                  <a
+                    style="
+                      color: #0d6efd;
+                      text-decoration: none;
+                      cursor: pointer;
+                    "
+                    target="_blank"
+                    (click)="navigateToBusinessInfo(company)"
+                    >{{ company.companyName }}</a
+                  >
+                </td>
+                <td>{{ company.ticker }}</td>
+                <td>{{ company.exchange }}</td>
+                @if (shouldShowColumn('sector')) {
+                <td>{{ getDisplayValue(company, "sector") }}</td>
+                } @if (shouldShowColumn('geography')) {
+                <td>{{ getDisplayValue(company, "geography") }}</td>
+                } @if (shouldShowColumn('primaryIndustry')) {
+                <td>{{ getDisplayValue(company, "primaryIndustry") }}</td>
+                } @if (shouldShowColumn('state')) {
+                <td>{{ getDisplayValue(company, "state") }}</td>
+                }
+                <!-- Dynamic financial columns -->
+                @for (column of selectedTableCriteria; track column) { @if
+                (column !== 'sector' && column !== 'geography' && column !==
+                'primaryIndustry' && column !== 'state') {
+                <td
+                  [style.text-align]="
+                    isNumericColumn(column) ? 'right' : 'left'
+                  "
+                >
+                  {{
+                    getDisplayValue(company, column)
+                      | formatNumber : "thousands"
+                  }}
+                </td>
+                } }
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination-container">
+          <!-- <div class="pagination-info">
+            <span>
+              Showing {{ getStartRecord() }} to {{ getEndRecord() }} of
+              {{ totalElements }} entries
+            </span>
+          </div> -->
+
+          <div class="pagination-controls">
+            <!-- Page Size Dropdown -->
+            <div class="page-size-control">
+              <label for="pageSize" style="color: white">Show:</label>
+              <select
+                id="pageSize"
+                [value]="pageSize"
+                (change)="onPageSizeChange($event)"
+                class="page-size-select"
+              >
+                @for (size of pageSizeOptions; track size) {
+                <option [value]="size">{{ size }}</option>
+                }
+              </select>
+              <span style="color: white">Entries</span>
+            </div>
+
+            <!-- Page Navigation -->
+            <div class="page-navigation">
+              <!-- Previous Button -->
+              <button
+                class="page-btn"
+                [disabled]="currentPage === 1"
+                (click)="onPreviousPage()"
+              >
+                Previous
+              </button>
+
+              <!-- Page Numbers -->
+              <div class="page-numbers">
+                @if (currentPage > 3) {
+                <button class="page-btn" (click)="goToPage(1)">1</button>
+                @if (currentPage > 4) {
+                <span class="page-ellipsis">...</span>
+                } } @for (page of getPageNumbers(); track page) {
+                <button
+                  class="page-btn"
+                  [class.active]="page === currentPage"
+                  (click)="goToPage(page)"
+                >
+                  {{ page }}
+                </button>
+                } @if (currentPage < totalPages - 2) { @if (currentPage <
+                totalPages - 3) {
+                <span class="page-ellipsis">...</span>
+                }
+                <button class="page-btn" (click)="goToPage(totalPages)">
+                  {{ totalPages }}
+                </button>
+                }
+              </div>
+
+              <!-- Next Button -->
+              <button
+                class="page-btn"
+                [disabled]="currentPage === totalPages"
+                (click)="onNextPage()"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      } @if (companiesClusterData.length === 0) {
+      <div class="no-data-message">
+        <p>Please select your criteria and run your search.</p>
+      </div>
+      }
+    </div>
+    <!-- selected columns -->
+    <div #selectCriteriaSection style="display: none">
+      <h1 class="my-4" style="color: white; font-size: 20px">
+        Select Table Criteria
+        <span
+          ><a
+            class="close_del"
+            style="color: white; cursor: pointer; padding: 6px"
+            (click)="
+              companiesCluster.style.display = 'block';
+              selectCriteriaSection.style.display = 'none'
+            "
+          >
+            <i class="fa-solid fa-xmark" style="font-size: 18px"></i> </a
+        ></span>
+      </h1>
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Select Criteria Box -->
+          <div class="col-md-4">
+            <div
+              class="select-criteria-box p-3"
+              style="
+                border-radius: 7px;
+                background-color: #3d3d3d;
+                min-height: 500px;
+                display: block;
+              "
+            >
+              <h5 class="text-white mb-3">Select Criteria</h5>
+              <div
+                class="criteria-tree"
+                style="max-height: 450px; overflow-y: auto"
+              >
+                <ng-container *ngFor="let item of categoryData">
+                  <ng-container
+                    *ngTemplateOutlet="
+                      categoryTemplate;
+                      context: { $implicit: item, level: 0 }
+                    "
+                  >
+                  </ng-container>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <!-- Select Parameter Box -->
+          <div class="col-md-4">
+            <div
+              class="select-parameter-box p-3"
+              style="
+                border-radius: 7px;
+                background-color: #3d3d3d;
+                min-height: 500px;
+              "
+            >
+              <h5 class="text-white mb-3">Select Parameters</h5>
+
+              <div *ngIf="selectedCriteria" class="parameter-section">
+                <h6 class="text-info mb-3" style="color: #0d6efd !important">
+                  {{ selectedCriteria.name }}
+                  <span style="color: white">(USD Thousands)</span>
+                </h6>
+
+                <div
+                  *ngIf="
+                    selectedCriteria.parameters &&
+                    selectedCriteria.parameters.length > 0
+                  "
+                >
+                  <!-- Operator Selection -->
+                  <div class="mb-3">
+                    <label class="text-white d-block mb-2">Operator</label>
+                    <select
+                      class="form-select"
+                      [value]="selectedOperator"
+                      (change)="onOperatorChange($any($event.target).value)"
+                    >
+                      <option value="">Select Operator</option>
+                      <option
+                        *ngFor="let operator of getFilteredOperators()"
+                        [value]="operator"
+                      >
+                        {{ operator }}
+                      </option>
+                    </select>
+                  </div>
+
+                  <!-- Value Input(s) -->
+                  <div class="mb-3">
+                    <label class="text-white d-block mb-2">Value</label>
+                    <!-- Single value input -->
+                    <ng-container
+                      *ngIf="
+                        operatorMap[selectedOperator] !== 'between';
+                        else betweenInputs
+                      "
+                    >
+                      <input
+                        type="number"
+                        class="form-control"
+                        [value]="selectedValue || ''"
+                        (input)="onValueChange($any($event.target).value)"
+                        placeholder="Enter value"
+                        [disabled]="!selectedOperator"
+                      />
+                    </ng-container>
+                    <!-- Between inputs -->
+                    <ng-template #betweenInputs>
+                      <div class="d-flex gap-2">
+                        <input
+                          type="number"
+                          class="form-control"
+                          [value]="selectedValueMin || ''"
+                          (input)="onMinValueChange($any($event.target).value)"
+                          placeholder="Min value"
+                          [disabled]="!selectedOperator"
+                        />
+                        <input
+                          type="number"
+                          class="form-control"
+                          [value]="selectedValueMax || ''"
+                          (input)="onMaxValueChange($any($event.target).value)"
+                          placeholder="Max value"
+                          [disabled]="!selectedOperator"
+                        />
+                      </div>
+                    </ng-template>
+                  </div>
+                </div>
+
+                <div
+                  *ngIf="
+                    !selectedCriteria.parameters ||
+                    selectedCriteria.parameters.length === 0
+                  "
+                >
+                  <p class="text-white-50">
+                    No parameters available for this criteria.
+                  </p>
+                </div>
+              </div>
+
+              <div *ngIf="!selectedCriteria" class="text-center text-white-50">
+                <p>Select a criteria from the left panel</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Period Selection Box -->
+          <div class="col-md-4">
+            <div
+              class="selected-criteria-box p-3"
+              style="
+                border-radius: 7px;
+                background-color: #3d3d3d;
+                min-height: 500px;
+              "
+            >
+              <h5 class="text-white mb-3">Select Period</h5>
+
+              <div
+                *ngIf="selectedCriteria && isValidForParameterSelection()"
+                class="period-section"
+              >
+                <h6 class="text-info mb-3" style="color: #0d6efd !important">
+                  {{ selectedCriteria.name }}
+                </h6>
+
+                <!-- Year Type Selection -->
+                <div class="mb-3">
+                  <label class="text-white d-block mb-2">Year Type</label>
+                  <select
+                    class="form-select"
+                    [value]="selectedYearType"
+                    (change)="onYearTypeChange($any($event.target).value)"
+                  >
+                    <option value="">Select Year Type</option>
+                    <option
+                      *ngFor="let yearType of selectedCriteria.yearType"
+                      [value]="yearType"
+                    >
+                      {{ yearType }}
+                    </option>
+                  </select>
+                </div>
+
+                <!-- Period Selection -->
+                <div class="mb-3">
+                  <label class="text-white d-block mb-2">Period</label>
+                  <select
+                    class="form-select"
+                    [value]="selectedPeriod"
+                    (change)="onPeriodChange($any($event.target).value)"
+                    [disabled]="!selectedYearType"
+                  >
+                    <option value="">Select Period</option>
+                    <option
+                      *ngFor="let period of getAvailablePeriods()"
+                      [value]="period"
+                    >
+                      {{ period }}
+                    </option>
+                  </select>
+                </div>
+
+                <button
+                  class="btn btn-primary mt-3 w-100"
+                  (click)="addCriteria()"
+                  [disabled]="!isValidToAdd()"
+                >
+                  Add
+                </button>
+              </div>
+
+              <div
+                *ngIf="!selectedCriteria || !isValidForParameterSelection()"
+                class="text-center text-white-50"
+              >
+                <p>Complete parameter selection first</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template for recursive category tree -->
+      <ng-template #categoryTemplate let-item let-level="level">
+        <div class="category-item" [style.margin-left.px]="level * 20">
+          <!-- Parent nodes with children -->
+          <div
+            *ngIf="hasChildren(item)"
+            class="category-parent d-flex align-items-center py-1 cursor-pointer"
+            [attr.data-criteria-id]="item.id"
+            (click)="toggleExpand(item)"
+          >
+            <i
+              class="fas"
+              [class.fa-chevron-right]="!item.expanded"
+              [class.fa-chevron-down]="item.expanded"
+              style="color: #ccc; font-size: 12px; margin-right: 8px"
+            ></i>
+            <span class="text-white">{{ item.name }}</span>
+          </div>
+
+          <!-- Leaf nodes (selectable) -->
+          <div
+            *ngIf="isLeafNode(item)"
+            class="category-leaf py-2 px-2 cursor-pointer"
+            [class.selected]="isSelected(item)"
+            [attr.data-criteria-id]="item.id"
+            (click)="selectCriteria(item)"
+            style="border-radius: 4px; transition: all 0.2s ease"
+          >
+            <span class="text-white">{{ item.name }}</span>
+          </div>
+
+          <!-- Children (only rendered when expanded) -->
+          <div
+            *ngIf="hasChildren(item) && item.expanded"
+            class="children-container"
+          >
+            <ng-container *ngFor="let child of item.children">
+              <ng-container
+                *ngTemplateOutlet="
+                  categoryTemplate;
+                  context: { $implicit: child, level: level + 1 }
+                "
+              >
+              </ng-container>
+            </ng-container>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

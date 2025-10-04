@@ -1,0 +1,564 @@
+<img src="./img/bg-backup.png" class="wrape_img" />
+<div class="pages">
+  <div class="sub_header" style="display: flex;align-items: center;">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-2">
+          <div class="company_title d-flex align-items-center">
+            <h4>Investor Screening</h4>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="d-flex width-100 gap-4">
+            <!-- You can add search functionality later if needed -->
+          </div>
+        </div>
+        <div class="col-lg-3"></div>
+      </div>
+    </div>
+  </div>
+  <!-----------------main-list-container------------->
+  
+  <!-- Investors Criteria Component -->
+  <app-investors-criteria
+    [selectedInvestorProfile]="selectedInvestorProfile"
+    [selectedInvestmentPreference]="selectedInvestmentPreference"
+    [investorTypeOptions]="investorTypeOptions"
+    [investmentFirmTypeOptions]="investmentFirmTypeOptions"
+    [locationOptions]="locationOptions"
+    [sectorOptions]="sectorOptions"
+    [dropdownAllCriteria]="categoryData"
+    (clearSelection)="onClearSelection($event)"
+    (openCriteriaSelector)="showCriteriaSelector($event)"
+    (investorsClusterData)="onRunScreenGetInvestorsClusterData($event)"
+    (criteriaExpanded)="onCriteriaExpanded($event)"
+    (runScreenClicked)="onRunScreenClicked()"
+    (changedDropdownCriteria)="onDropdownCriteriaChange($event)"
+  ></app-investors-criteria>
+ 
+ 
+
+
+  <!-- Criteria filter forms -->
+
+  <div class="criteria-filter-container mt-4 container-fluid">
+    <div>
+      <!-- Financial Investor Profile Filter -->
+      <div
+        [hidden]="selectedCriteriaFilter !== 'financial-investor-profile'"
+        class="criteria-filter"
+      >
+        <div class="filter_header mb-3 d-flex align-items-center gap-2">
+          <span class="icon_header">
+            <img
+              style="width: 40px; height: 40px"
+              src="./img/cog.png"
+              alt=""
+            />
+          </span>
+          <h3 style="color: white; font-size: 18px; margin: 0">Financial Investor Profile</h3>
+          <a
+            class="close_del"
+            style="color: white; cursor: pointer; padding: 6px"
+            (click)="selectedCriteriaFilter = undefined"
+          >
+            <i class="fa-solid fa-xmark" style="font-size: 18px"></i>
+          </a>
+        </div>
+        
+        <!-- Investor Type Checkboxes -->
+        <div class="mb-4">
+          <label style="display: block; margin-bottom: 10px; color: white; font-size: 14px;">Investor Type:</label>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;">
+            @for (option of investorTypeOptions; track option.label) {
+            <label style="display: flex; align-items: center; color: white; font-size: 14px;">
+              <input type="checkbox" 
+                     [checked]="selectedInvestorProfile.investorTypes[option.label]"
+                     (change)="onInvestorTypeChange(option.label, $any($event.target).checked)"
+                     style="margin-right: 8px;">
+              {{ option.label }}
+            </label>
+            }
+          </div>
+        </div>
+        
+        <!-- Investment Firm Type Checkboxes -->
+        <div class="mb-4">
+          <label style="display: block; margin-bottom: 10px; color: white; font-size: 14px;">Investment Firm Type:</label>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;">
+            @for (option of investmentFirmTypeOptions; track option.label) {
+            <label style="display: flex; align-items: center; color: white; font-size: 14px;">
+              <input type="checkbox" 
+                     [checked]="selectedInvestorProfile.investmentFirmTypes[option.label]"
+                     (change)="onInvestmentFirmTypeChange(option.label, $any($event.target).checked)"
+                     style="margin-right: 8px;">
+              {{ option.label }}
+            </label>
+            }
+          </div>
+        </div>
+        
+        <!-- AUM Range Inputs -->
+        <div>
+          <label style="display: block; margin-bottom: 10px; color: white; font-size: 14px;">AUM (Millions):</label>
+          <div style="display: flex; gap: 15px; align-items: center;">
+            <input type="number" 
+                   placeholder="Min" 
+                   [value]="selectedInvestorProfile.aum.min"
+                   (input)="onAumChange($any($event.target).value ? toNumber($any($event.target).value) : null, selectedInvestorProfile.aum.max)"
+                   style="width: 100px; padding: 8px; border: 1px solid #555; background: #222; color: white; border-radius: 4px;">
+            <span style="color: white; font-size: 14px;">to</span>
+            <input type="number" 
+                   placeholder="Max" 
+                   [value]="selectedInvestorProfile.aum.max"
+                   (input)="onAumChange(selectedInvestorProfile.aum.min, $any($event.target).value ? toNumber($any($event.target).value) : null)"
+                   style="width: 100px; padding: 8px; border: 1px solid #555; background: #222; color: white; border-radius: 4px;">
+          </div>
+          
+          <!-- Get Count Button -->
+          <div style="margin-top: 15px;">
+            <button 
+              type="button" 
+              class="btn btn-outline-light" 
+              (click)="fetchInvestorCounts()"
+              style="font-size: 14px; padding: 8px 16px;">
+              Get Count
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Financial Investment Preference Filter -->
+      <div
+        [hidden]="selectedCriteriaFilter !== 'financial-investment-preference'"
+        class="criteria-filter"
+      >
+        <div class="filter_header mb-3 d-flex align-items-center gap-2">
+          <span class="icon_header">
+            <img
+              style="width: 40px; height: 40px"
+              src="./img/glob.png"
+              alt=""
+            />
+          </span>
+          <h3 style="color: white; font-size: 18px; margin: 0">Financial Investment Preference</h3>
+          <a
+            class="close_del"
+            style="color: white; cursor: pointer; padding: 6px"
+            (click)="selectedCriteriaFilter = undefined"
+          >
+            <i class="fa-solid fa-xmark" style="font-size: 18px"></i>
+          </a>
+        </div>
+        
+        <!-- Locations Checkboxes -->
+        <div class="mb-4">
+          <label style="display: block; margin-bottom: 10px; color: white; font-size: 14px;">Locations:</label>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;">
+            @for (option of locationOptions; track option.label) {
+            <label style="display: flex; align-items: center; color: white; font-size: 14px;">
+              <input type="checkbox" 
+                     [checked]="selectedInvestmentPreference.locations[option.label]"
+                     (change)="onLocationChange(option.label, $any($event.target).checked)"
+                     style="margin-right: 8px;">
+              {{ option.label }}
+            </label>
+            }
+          </div>
+        </div>
+        
+        <!-- Sectors Checkboxes -->
+        <div>
+          <label style="display: block; margin-bottom: 10px; color: white; font-size: 14px;">Sectors:</label>
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;">
+            @for (option of sectorOptions; track option.label) {
+            <label style="display: flex; align-items: center; color: white; font-size: 14px;">
+              <input type="checkbox" 
+                     [checked]="selectedInvestmentPreference.sectors[option.label]"
+                     (change)="onSectorChange(option.label, $any($event.target).checked)"
+                     style="margin-right: 8px;">
+              {{ option.label }}
+            </label>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- investors table -->
+    <div #investorsCluster>
+      @if (investorsData.length > 0) {
+      <h1 class="my-4" style="color: white; font-size: 18px">Search Results ({{ totalElements }} investors found)</h1>
+      <div class="container-fluid" style="padding: 0 !important">
+        <div class="my-3">
+          <!-- <button
+            class="submit_button"
+            style="border-radius: 5px; padding: 5px 10px; border: none"
+          >
+            Edit Columns
+          </button> -->
+        </div>
+
+        <!-- Table -->
+        <div class="table-container">
+          <table class="companies-table">
+            <thead>
+              <tr>
+                <th>Investor Name</th>
+                <th>Exchange</th>
+                <th>Investment Firm Type</th>
+                <th>Company Type</th>
+                <th>AUM</th>
+                <th>Geography</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (investor of getPaginatedInvestors(); track investor.entityId) {
+              <tr>
+                <td>
+                  <a
+                    style="
+                      color: #0d6efd;
+                      text-decoration: none;
+                      cursor: pointer;
+                    "
+                     target="_blank"
+                    (click)="navigateToInvestorDetails(investor)"
+                    >{{ getDisplayValue(investor, "investorName") }}</a
+                  >
+                </td>
+                <td>{{ getDisplayValue(investor, "exchange") }}</td>
+                <td>{{ getDisplayValue(investor, "investmentFirmType") }}</td>
+                <td>{{ getDisplayValue(investor, "companyType") }}</td>
+                <td>{{ getDisplayValue(investor, "aum") }}</td>
+                <td>{{ getDisplayValue(investor, "geography") }}</td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination-container">
+          <!-- <div class="pagination-info">
+            <span>
+              Showing {{ getStartRecord() }} to {{ getEndRecord() }} of
+              {{ totalElements }} entries
+            </span>
+          </div> -->
+
+          <div class="pagination-controls">
+            <!-- Page Size Dropdown -->
+            <div class="page-size-control">
+              <label for="pageSize" style="color: white">Show:</label>
+              <select
+                id="pageSize"
+                [value]="pageSize"
+                (change)="onPageSizeChange($event)"
+                class="page-size-select"
+              >
+                @for (size of pageSizeOptions; track size) {
+                <option [value]="size">{{ size }}</option>
+                }
+              </select>
+              <span style="color: white">Entries</span>
+            </div>
+
+            <!-- Page Navigation -->
+            <div class="page-navigation">
+              <!-- Previous Button -->
+              <button
+                class="page-btn"
+                [disabled]="currentPage === 1"
+                (click)="onPreviousPage()"
+              >
+                Previous
+              </button>
+
+              <!-- Page Numbers -->
+              <div class="page-numbers">
+                @if (currentPage > 3) {
+                <button class="page-btn" (click)="goToPage(1)">1</button>
+                @if (currentPage > 4) {
+                <span class="page-ellipsis">...</span>
+                } } @for (page of getPageNumbers(); track page) {
+                <button
+                  class="page-btn"
+                  [class.active]="page === currentPage"
+                  (click)="goToPage(page)"
+                >
+                  {{ page }}
+                </button>
+                } @if (currentPage < totalPages - 2) { @if (currentPage <
+                totalPages - 3) {
+                <span class="page-ellipsis">...</span>
+                }
+                <button class="page-btn" (click)="goToPage(totalPages)">
+                  {{ totalPages }}
+                </button>
+                }
+              </div>
+
+              <!-- Next Button -->
+              <button
+                class="page-btn"
+                [disabled]="currentPage === totalPages"
+                (click)="onNextPage()"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      } @if (investorsData.length === 0) {
+      <div class="no-data-message">
+        <p>Please select your criteria to filter investors.</p>
+      </div>
+      }
+    </div>
+
+    <!-- Investor Criteria Selection Section -->
+    <div id="selectInvestorCriteriaSection" style="display: none">
+      <h1 class="my-4" style="color: white; font-size: 20px">
+        Select Investor Criteria
+        <span>
+          <a
+            class="close_del"
+            style="color: white; cursor: pointer; padding: 6px"
+            (click)="hideInvestorCriteriaSelector()"
+          >
+            <i class="fa-solid fa-xmark" style="font-size: 18px"></i>
+          </a>
+        </span>
+      </h1>
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Select Criteria Box -->
+          <div class="col-md-4">
+            <div
+              class="select-criteria-box p-3"
+              style="
+                border-radius: 7px;
+                background-color: #3d3d3d;
+                min-height: 500px;
+                display: block;
+              "
+            >
+              <h5 class="text-white mb-3">Select Investor Criteria</h5>
+              <div class="criteria-tree" style="max-height: 400px; overflow-y: auto">
+                @for (item of categoryData; track item.id) {
+                <div class="criteria-group">
+                  <div
+                    class="criteria-item parent-item"
+                    [class.selected]="isInvestorCriteriaSelected(item)"
+                    [attr.data-investor-criteria-id]="item.id"
+                    (click)="toggleInvestorExpand(item)"
+                    style="
+                      padding: 8px 12px;
+                      margin: 2px 0;
+                      cursor: pointer;
+                      border-radius: 4px;
+                      background-color: #555;
+                      color: white;
+                      font-weight: 500;
+                    "
+                  >
+                    <span class="expand-icon" style="margin-right: 8px">
+                      @if (hasInvestorChildren(item)) {
+                      {{ item.expanded ? '▼' : '▶' }}
+                      }
+                    </span>
+                    {{ item.name }}
+                  </div>
+
+                  @if (item.expanded && hasInvestorChildren(item)) {
+                  <div class="criteria-children" style="margin-left: 20px">
+                    <ng-container *ngTemplateOutlet="recursiveInvestorTree; context: { items: item.children, level: 1 }"></ng-container>
+                  </div>
+                  }
+                </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Value Selection Box -->
+          <div class="col-md-4">
+            <div
+              class="select-values-box p-3"
+              style="
+                border-radius: 7px;
+                background-color: #3d3d3d;
+                min-height: 500px;
+                display: block;
+              "
+            >
+              <h5 class="text-white mb-3">Set Values</h5>
+
+              @if (selectedInvestorCriteria) {
+              <div class="value-selection">
+                <h6 class="text-info mb-3" style="color: #0d6efd !important">
+                  {{ selectedInvestorCriteria.name }}
+                </h6>
+
+                <!-- Min Value Input -->
+                <div class="mb-3">
+                  <label class="text-white d-block mb-2">Minimum Value</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    style="background-color: #555; border-color: #777; color: white"
+                    placeholder="Enter minimum value"
+                    [value]="selectedInvestorMinValue"
+                    (input)="onInvestorMinValueChange($any($event.target).value)"
+                  />
+                </div>
+
+                <!-- Max Value Input -->
+                <div class="mb-3">
+                  <label class="text-white d-block mb-2">Maximum Value</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    style="background-color: #555; border-color: #777; color: white"
+                    placeholder="Enter maximum value"
+                    [value]="selectedInvestorMaxValue"
+                    (input)="onInvestorMaxValueChange($any($event.target).value)"
+                  />
+                </div>
+
+                <button
+                  class="btn btn-primary mt-3 w-100"
+                  (click)="addInvestorCriteria()"
+                  [disabled]="!isValidInvestorCriteriaToAdd()"
+                >
+                  Add Criteria
+                </button>
+              </div>
+              } @else {
+              <div class="text-center text-muted" style="margin-top: 100px">
+                <p>Select a criteria from the left to set values</p>
+              </div>
+              }
+            </div>
+          </div>
+
+          <!-- Added Criteria Box -->
+          <div class="col-md-4">
+            <div
+              class="added-criteria-box p-3"
+              style="
+                border-radius: 7px;
+                background-color: #3d3d3d;
+                min-height: 500px;
+                display: block;
+              "
+            >
+              <h5 class="text-white mb-3">
+                Added Criteria
+                @if (addedInvestorCriteria.length > 0) {
+                <button
+                  class="btn btn-sm btn-outline-danger ms-2"
+                  (click)="clearAllInvestorCriteria()"
+                  style="font-size: 12px"
+                >
+                  Clear All
+                </button>
+                }
+              </h5>
+
+              @if (addedInvestorCriteria.length > 0) {
+              <div class="added-criteria-list" style="max-height: 400px; overflow-y: auto">
+                @for (criteria of addedInvestorCriteria; track $index; let i = $index) {
+                <div
+                  class="added-criteria-item"
+                  style="
+                    background-color: #555;
+                    border-radius: 4px;
+                    padding: 10px;
+                    margin-bottom: 8px;
+                    color: white;
+                  "
+                >
+                  @for (parentKey of [getFirstKey(criteria)]; track parentKey) {
+                  @for (criteriaKey of [getFirstKey(criteria[parentKey])]; track criteriaKey) {
+                  <div class="criteria-name" style="font-weight: 500; margin-bottom: 5px">
+                    {{ criteriaKey }}
+                  </div>
+                  <div class="criteria-values" style="font-size: 14px; color: #ccc">
+                    @if (criteria[parentKey][criteriaKey].between) {
+                    Between: {{ criteria[parentKey][criteriaKey].between[0] }} - {{ criteria[parentKey][criteriaKey].between[1] }}
+                    } @else if (criteria[parentKey][criteriaKey].gte !== undefined) {
+                    Greater than or equal: {{ criteria[parentKey][criteriaKey].gte }}
+                    } @else if (criteria[parentKey][criteriaKey].lte !== undefined) {
+                    Less than or equal: {{ criteria[parentKey][criteriaKey].lte }}
+                    } @else if (criteria[parentKey][criteriaKey].gt !== undefined) {
+                    Greater than: {{ criteria[parentKey][criteriaKey].gt }}
+                    } @else if (criteria[parentKey][criteriaKey].lt !== undefined) {
+                    Less than: {{ criteria[parentKey][criteriaKey].lt }}
+                    } @else if (criteria[parentKey][criteriaKey].eq !== undefined) {
+                    Equal: {{ criteria[parentKey][criteriaKey].eq }}
+                    }
+                  </div>
+                  }
+                  }
+                  <button
+                    class="btn btn-sm btn-outline-danger mt-2"
+                    (click)="removeInvestorCriteria(i)"
+                    style="font-size: 12px"
+                  >
+                    Remove
+                  </button>
+                </div>
+                }
+              </div>
+              } @else {
+              <div class="text-center text-muted" style="margin-top: 100px">
+                <p>No criteria added yet</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recursive Template for Investor Criteria Tree -->
+<ng-template #recursiveInvestorTree let-items="items" let-level="level">
+  @for (item of items; track item.id) {
+  <div
+    class="criteria-item"
+    [class.selected]="isInvestorCriteriaSelected(item)"
+    [class.highlighted-from-dropdown]="false"
+    [attr.data-investor-criteria-id]="item.id"
+    (click)="isSelectableCriteria(item) ? selectInvestorCriteria(item) : toggleInvestorExpand(item)"
+    [style.padding]="'6px 12px'"
+    [style.margin]="'1px 0'"
+    [style.cursor]="'pointer'"
+    [style.border-radius]="'4px'"
+    [style.color]="'white'"
+    [style.font-size]="(14 - level) + 'px'"
+    [style.transition]="'background-color 0.2s'"
+    [style.background-color]="isInvestorCriteriaSelected(item) ? '#007bff' : (level === 1 ? '#666' : level === 2 ? '#777' : '#888')"
+    [style.opacity]="isSelectableCriteria(item) ? '1' : '0.7'"
+  >
+    <span class="expand-icon" style="margin-right: 8px">
+      @if (hasInvestorChildren(item)) {
+      {{ item.expanded ? '▼' : '▶' }}
+      } @else if (isSelectableCriteria(item)) {
+      <i class="fa fa-plus" style="font-size: 10px; color: #4CAF50;"></i>
+      }
+    </span>
+    {{ item.name }}
+  </div>
+  
+  @if (item.expanded && hasInvestorChildren(item)) {
+  <div class="criteria-children" [style.margin-left]="(level * 20) + 'px'">
+    <ng-container *ngTemplateOutlet="recursiveInvestorTree; context: { items: item.children, level: level + 1 }"></ng-container>
+  </div>
+  }
+  }
+</ng-template>

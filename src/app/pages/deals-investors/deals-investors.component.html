@@ -1,0 +1,221 @@
+<img src="./img/di.png" class="wrape_img" />
+<div class="pages">
+    <div class="sub_header">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="company_title d-flex align-items-center">
+              <h4>Company Screening</h4>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="d-flex width-100 gap-4">
+              <div class="chat_exp_btn">
+                <button>Chat ExM</button>
+              </div>
+              <div class="sq_tool  d-flex align-items-center">
+                <a>Sequoia
+                  <span>
+                <img src="./img/g_logo.png" alt="" class="g_logo">
+              </span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-3"></div>
+        </div>
+      </div>
+    </div>
+    <!-----------------main-list-container------------->
+    <criteria></criteria>
+    <!------------------feature item-list------------------------->
+    <div class="feature_list_wraper data_margin">
+      <div class="container-fluid">
+        <div class="filter_container">
+            <div class="inner_filter_container">
+              <div class="filter_section">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <div class="filter_header mb-3 d-flex">
+                        <span class="icon_header">
+                            <img src="./img/groth.png" alt="">
+                        </span>
+                        <h3>Deals and Investors</h3>
+                        <a routerLink="" class="close_del">
+                          <i class="fa-solid fa-xmark"></i>
+                        </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="filter_main_data">
+                    <div class="sector-container">
+                        <div class="form_boxs">
+                            <div class="form_item">
+                                <div class="row">
+                                    <div class="col-lg-12 m-auto">
+                                        <div class="row">
+                                            
+                                            
+                                            <div class="col-lg-7">
+                                                <div class="row filter-row">
+                                                    <div class="col-md-3 filter-label"><br>
+                                                      Last Round Offering Size  ('$000) </div>
+                                                    <div class="col-md-4">
+                                                      <div class=" center_tex_hd">
+                                                        <h4 class="text-center ">Min</h4>
+                                                      </div>
+                                                      <input type="text" class="form-control min"  value=""  (change)="onValueChange($event, 'min',3)">
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                      <div class="center_tex_hd"  style="width: 80%;">
+                                                        <h4 class="text-center ">Max</h4>
+                                                      </div>
+                                                   
+                                                      <input type="text" class="form-control" value="" (change)="onValueChange($event, 'max',3)">
+                                                    </div>
+                                                  </div>
+                                              
+                                                  <div class="row filter-row">
+                                                    <div class="col-md-3 filter-label">Pre-Money Valuation   ('$000) </div>
+                                                    <div class="col-md-4"><input type="text" class="form-control min" value=""  (change)="onValueChange($event, 'min',4)"></div>
+                                                    <div class="col-md-4"><input type="text" class="form-control" value="" (change)="onValueChange($event, 'min',4)"></div>
+                                                  </div>
+                                              
+                                                  <div class="row filter-row">
+                                                    <div class="col-md-3 filter-label">Post-Money Valuation   ('$000) </div>
+                                                    <div class="col-md-4"><input type="text" class="form-control min" value="" (change)="onValueChange($event, 'min',5)"></div>
+                                                    <div class="col-md-4"><input type="text" class="form-control"   value=""  (change)="onValueChange($event, 'min',5)"></div>
+                                                  </div>
+                                              
+                                                  <div class="row filter-row">
+                                                    <div class="col-md-3 filter-label">Total Amount Raised   ('$000) </div>
+                                                    <div class="col-md-4"><input type="text" class="form-control min" value=""  (change)="onValueChange($event, 'min',6)"></div>
+                                                    <div class="col-md-4"><input type="text" class="form-control"   value=""  (change)="onValueChange($event, 'min',6)"></div>
+                                                  </div>
+                                              
+                                                  <div class="row filter-row">
+                                                    <div class="col-md-3 filter-label">Deal Date  (mm/dd/yyyy)</div>
+                                                    <div class="col-md-4">
+                                                      <input type="date" class="form-control date-input min" placeholder="mm/yyyy/dd" >
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                      <input type="date" class="form-control date-input" placeholder="mm/yyyy/dd"  >
+                                                    </div>
+                                                 </div>
+                                            </div>
+                                            <div class="col-lg-5">
+                                              <div class="row">
+                                                    <div class="col-lg-4">
+                                                  <div class="mb-3 custom_input">
+                                                      <label for="email">Last Round
+                                                          Type:</label>
+                                                      <select name="investmentStage" id="investmentStage" class="form-select"
+                                                      (change)="onInvestmentStageChange($event,0)">
+                                                          <option value="Mature">Mature</option>
+                                                          <option value="Debt">Debt</option>
+                                                          <option value="Series K">Series K</option>
+                                                          <option value="Venture">Venture</option>
+                                                          <option value="Series A">Series A</option>
+                                                          <option value="Series B">Series B</option>
+                                                          <option value="Growth">Growth</option>
+                                                          <option value="Pre-Seed">Pre-Seed</option>
+                                                          <option value="Series C">Series C</option>
+                                                          <option value="Series E">Series E</option>
+                                                          <option value="Series D">Series D</option>
+                                                          <option value="Seed">Seed</option>
+                                                          <option value="Series G">Series G</option>
+                                                          <option value="Accelerator">Accelerator</option>
+                                                          <option value="Series F">Series F</option>
+                                                          <option value="Bridge">Bridge</option>
+                                                          <option value="Series H">Series H</option>
+                                                          <option value="Angel">Angel</option>
+                                                          <option value="Crowd-Funding">Crowd-Funding</option>
+                                                          <option value="Pre-Series A">Pre-Series A</option>
+                                                          <option value="Series R">Series R</option>
+                                                          <option value="Series I">Series I</option>
+                                                          <option value="Series T">Series T</option>
+                                                          <option value="Pre-Series B">Pre-Series B</option>
+                                                      </select>
+                                                  </div>
+                                                 
+                                              </div>
+                                              <div class="col-lg-4">
+                                                  <div class="mb-3  custom_input">
+                                                      <label for="email">Last
+                                                          Round
+                                                          Number:</label>
+                                                          <select name="investmentStage" id="investmentStage" class="form-select"
+                                                          (change)="onInvestmentStageChange($event,1)">
+                                                              <option value="1">1</option>
+                                                              <option value="2">2</option>
+                                                              <option value="3">3 </option>
+                                                              <option value="4">4</option>
+                                                              <option value="5">5 </option>
+                                                              <option value="6">6</option>
+                                                              <option value="7">7</option>
+                                                              <option value="8">8</option>
+                                                              <option value="9">9</option>
+                                                              <option value="10">10</option>
+                                                              <option value="11">11</option>
+                                                              <option value="12">12</option>
+                                                              <option value="13">13</option>
+                                                              <option value="14">14</option>
+                                                              <option value="15">15</option>
+                                                              <option value="16">16</option>
+                                                              <option value="17">17</option>
+                                                              <option value="18">18</option>
+                                                              <option value="19">19</option>
+                                                              <option value="20">20</option>
+                                                              <option value="21">21/option>
+                                                              <option value="22">22</option>
+                                                              <option value="23">23</option>
+                                                              <option value="24">24</option>
+                                                          </select>
+                                                  </div>
+                                                 
+                                              </div>
+                                              <div class="col-lg-4">
+                                                  <div class="mb-3  custom_input">
+                                                      <label for="email">Investor
+                                                          Type:</label>
+                                                          <select name="investmentStage" id="investmentStage" class="form-select"
+                                                          (change)="onInvestmentStageChange($event,2)">
+                                                              <option value="Corporate Investor">Corporate Investor</option>
+                                                              <option value="Corporate Pension Plan Sponsor">Corporate Pension Plan Sponsor</option>
+                                                              <option value="Endowment Fund Sponsor"> Endowment Fund Sponsor</option>
+                                                              <option value="Family Office or Family Trust"> Family Office or Family Trust </option>
+                                                              <option value="Financial Investor"> Financial Investor </option>
+                                                              <option value="Foundation">Foundation</option>
+                                                              <option value="Fund Sponsor">Fund Sponsor</option>
+                                                              <option value="Government Pension Plan Sponsor">Government Pension Plan Sponsor</option>
+                                                              <option value="Hedge Fund Manager">Hedge Fund Manager</option>
+                                                              <option value="Insurance Company">Insurance Company</option>
+                                                              <option value="Investment Banking or Investment Firm">Investment Banking or Investment Firm</option>
+                                                              <option value="Other or Unknown">Other or Unknown</option>
+                                                              <option value="Private Debt">Private Debt</option>
+                                                              <option value="Private Equity or Venture Capital">Private Equity or Venture Capital</option>
+                                                              <option value="REIT or Real Estate Investment Manager">REIT or Real Estate Investment Manager</option>
+                                                              <option value="Sovereign Wealth Fund">Sovereign Wealth Fund</option>
+                                                              <option value="Structured Finance Pool Manager">Structured Finance Pool Manager</option>
+                                                              <option value="Traditional Investment Manager">Traditional Investment Manager</option>
+                                                              <option value="Union Pension Plan Sponsor">Union Pension Plan Sponsor</option>
+                                                          </select>
+                                                  </div>
+                                              </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

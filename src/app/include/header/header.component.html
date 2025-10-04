@@ -1,0 +1,62 @@
+<div class="header_section">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-2 col-6">
+        <div class="site_logo">
+          <a href="">
+            <span>
+              <img style="max-width: 100%;" src="./img/exm_logo.png" alt="" />
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="col-lg-9 mobile_controller">
+        <div class="main_menus">
+          <ul>
+            <li><a routerLink="company-screening" routerLinkActive="active">Companies</a></li>
+            <li><a href="">Transactions</a></li>
+            <li><a routerLink="investor-screening" routerLinkActive="active">Investors</a></li>
+            <li><a href="">Macroeconomics </a></li>
+            <li><a href="">Support</a></li>
+            <li><a href="">Sequoia</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-3 col-6">
+        <div class="mobile_flex">
+          <div class="right_site_logo text-right">
+            <a href="">
+              <span>
+                <!-- <img src="./img/exMdealgorithm.png" alt="" /> -->
+                <!-- <img src="./img/ExM-Peerlytics-V2.png" alt="" /> -->
+              </span>
+            </a>
+          </div>
+          <div class="mobile_menu">
+            <a (click)="mobileClick()">
+              <span>
+                <i class="fa-solid fa-bars"></i>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!----------------------mobile---menus------------------------->
+<div class="mobile_menu_container" *ngIf="this.showMenu">
+  <a class="close_btn" (click)="menuClose()">
+    <i class="fa-solid fa-xmark"></i>
+  </a>
+  <div class="main_menus">
+    <ul>
+      <li><a href="" class="gradient-companies">Companies</a></li>
+      <li><a href="" class="gradient-deals">Transactions</a></li>
+      <li><a routerLink="investor-screening" routerLinkActive="active">Investors</a></li>
+      <li><a href="">Macroeconomics </a></li>
+      <li><a href="">Support</a></li>
+      <li><a href="">Sequoia</a></li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,255 @@
+<!-- Sub Navigation -->
+
+<div class="flex flex-col md:flex-row">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  <!-- Main Content -->
+  <div class="flex-grow overflow-x-auto">
+    <div
+      class="bg-gray-900 border-b border-gray-800 px-6 py-3 flex flex-col md:flex-row justify-between"
+    >
+      <div>
+        <div class="d-flex align-items-center gap-2">
+          <h1 class="text-xl font-semibold">Amazon.com, Inc.</h1>
+          |
+          <p class="text-sm text-gray-400">Financial Highlights</p>
+        </div>
+        <p class="text-xs text-gray-500 mt-1">
+          NASDAQ:AMZN (ID 1337, 2000-1997, NYSQ:AMZ, 21-avg)
+        </p>
+      </div>
+      <div class="flex flex-wrap gap-2 mt-3 md:mt-0 items-start">
+        <button
+          class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm whitespace-nowrap"
+        >
+          Create Alert
+        </button>
+        <div class="relative">
+          <button
+            class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm flex items-center whitespace-nowrap"
+          >
+            Add to
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M8.00002 11.3333C7.82936 11.3333 7.65867 11.268 7.52867 11.138L2.862 6.47137C2.60134 6.2107 2.60134 5.78933 2.862 5.52866C3.12267 5.26799 3.54405 5.26799 3.80471 5.52866L8.00002 9.72397L12.1953 5.52866C12.456 5.26799 12.8774 5.26799 13.138 5.52866C13.3987 5.78933 13.3987 6.2107 13.138 6.47137L8.47138 11.138C8.34138 11.268 8.17069 11.3333 8.00002 11.3333Z"
+                  fill="white"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <button
+          class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm whitespace-nowrap"
+        >
+          Print
+        </button>
+        <div class="relative">
+          <button
+            class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm flex items-center whitespace-nowrap"
+          >
+            Export
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M8.00002 11.3333C7.82936 11.3333 7.65867 11.268 7.52867 11.138L2.862 6.47137C2.60134 6.2107 2.60134 5.78933 2.862 5.52866C3.12267 5.26799 3.54405 5.26799 3.80471 5.52866L8.00002 9.72397L12.1953 5.52866C12.456 5.26799 12.8774 5.26799 13.138 5.52866C13.3987 5.78933 13.3987 6.2107 13.138 6.47137L8.47138 11.138C8.34138 11.268 8.17069 11.3333 8.00002 11.3333Z"
+                  fill="white"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <div class="relative">
+          <button
+            class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm flex items-center whitespace-nowrap"
+          >
+            Links
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M8.00002 11.3333C7.82936 11.3333 7.65867 11.268 7.52867 11.138L2.862 6.47137C2.60134 6.2107 2.60134 5.78933 2.862 5.52866C3.12267 5.26799 3.54405 5.26799 3.80471 5.52866L8.00002 9.72397L12.1953 5.52866C12.456 5.26799 12.8774 5.26799 13.138 5.52866C13.3987 5.78933 13.3987 6.2107 13.138 6.47137L8.47138 11.138C8.34138 11.268 8.17069 11.3333 8.00002 11.3333Z"
+                  fill="white"
+                />
+              </svg>
+            </span>
+          </button>
+        </div>
+        <button
+          class="bg-gray-800 hover:bg-gray-700 text-white px-3 py-1.5 rounded-button text-sm whitespace-nowrap"
+        >
+          Build a Report
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3"></div>
+      <div class="col-md-4">
+        <ngx-slider
+          [(highValue)]="highValue"
+          [(value)]="value"
+          [options]="options"
+        ></ngx-slider>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <div class="p-6 shade_box">
+      <div class="mb-8">
+        <div class="overflow-x-auto">
+          <table class="table table-dark w-full min-w-max">
+            <thead>
+              <tr class="table-header">
+                <th class="table-cell text-left"></th>
+                <th class="table-cell text-right">2017 FY</th>
+                <th class="table-cell text-right">2018 FY</th>
+                <th class="table-cell text-right">2019 FY</th>
+                <th class="table-cell text-right">2020 FY</th>
+                <th class="table-cell text-right">2021 FY</th>
+                <th class="table-cell text-right">2022 FY</th>
+                <th class="table-cell text-right">2023 FY</th>
+                <th class="table-cell text-right">2024 FY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="table-row border-b border-gray-800">
+                <td class="table-cell d-flex align-items-center gap-3">
+                  Period Ended
+                  <span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                    >
+                      <path
+                        d="M8.00002 11.3334C7.82936 11.3334 7.65867 11.2681 7.52867 11.1381L2.862 6.4714C2.60134 6.21073 2.60134 5.78936 2.862 5.52869C3.12267 5.26802 3.54405 5.26802 3.80471 5.52869L8.00002 9.724L12.1953 5.52869C12.456 5.26802 12.8774 5.26802 13.138 5.52869C13.3987 5.78936 13.3987 6.21073 13.138 6.4714L8.47138 11.1381C8.34138 11.2681 8.17069 11.3334 8.00002 11.3334Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </span>
+                </td>
+                <td class="table-cell text-right">12/31/2017</td>
+                <td class="table-cell text-right">12/31/2018</td>
+                <td class="table-cell text-right">12/31/2019</td>
+                <td class="table-cell text-right">12/31/2020</td>
+                <td class="table-cell text-right">12/31/2021</td>
+                <td class="table-cell text-right">12/31/2022</td>
+                <td class="table-cell text-right">12/31/2023</td>
+                <td class="table-cell text-right">12/31/2024</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Income Statement Section -->
+      <div class="mb-8" *ngFor="let f of financials">
+        <div class="overflow-x-auto">
+          <table class="table table-dark table w-full min-w-max">
+            <thead>
+              <tr class="table-header">
+                <th
+                  class="table-cell text-left d-flex align-items-center gap-3"
+                >
+                  <span></span> {{ f.table_label }}
+                </th>
+                <th
+                  *ngFor="let heading of f.headers"
+                  class="table-cell text-right"
+                >
+                  {{ heading.year }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngFor="let row of f.data">
+                <!-- Parent row -->
+                <tr class="table-row border-b border-gray-800">
+                  <td
+                    class="table-cell flex items-center d-flex align-items-center gap-3"
+                  >
+                    <span
+                      (mouseenter)="
+                        showPopover(
+                          row.row_head_key,
+                          f.table_label,
+                          row.row_head_label
+                        )
+                      "
+                      triggers="mouseenter:mouseleave"
+                      [ngbPopover]="popContent"
+                      [popoverTitle]="popTitle"
+                      placement="right"
+                    >
+                      {{ row.row_head_label }}
+                    </span>
+                  </td>
+                  <td
+                    *ngFor="let r of row.data"
+                    class="table-cell text-right financial-value text-blue-400"
+                  >
+                    <span>{{ r | formatNumber }}</span>
+                    <!-- (click)="openCapIQPopup(content,row)" -->
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #popContent>
+  <span style="color: black; font-size: 12px">{{ popoverContent }}</span>
+</ng-template>
+
+<ng-template #popTitle>
+  <span style="font-weight: bold; color: black; font-size: 13px">{{
+    popoverTitle
+  }}</span>
+</ng-template>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">S&P Capital IQ</h4>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <!-- <iframe src="assets/10k-file.htm" style="width: 100%; height: 80vh; border: none;"></iframe> -->
+    <iframe #docViewer style="width: 100%; height: 80vh; border: none"></iframe>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-primary"
+      (click)="modal.close('Save click')"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>

@@ -1,0 +1,44 @@
+<div class="pages">
+  <!------------------feature item-list------------------------->
+  <div class="feature_list_wraper data_margin">
+    <div class="filter_container">
+      <div class="inner_filter_container">
+        <div class="filter_section">
+          <div class="filter_main_data">
+            <div class="sector-container">
+              <div class="business_table">
+                <div class="row">
+                  <div
+                    class="col-12 col-md-4"
+                    *ngFor="let company of companyTypeStatusData"
+                  >
+                    <p class="fw-bold text-white">{{ company.name }}</p>
+                    <div
+                      class="form-check mb-2 ps-3"
+                      style="margin-left: 20px"
+                      *ngFor="let data of company.data"
+                    >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        [(ngModel)]="data.checked"
+                        (change)="onCheckboxChange()"
+                        id="{{ company.name }}-{{ data.name }}"
+                      />
+                      <label
+                        class="form-check-label text-white"
+                        [for]="company.name + '-' + data.name"
+                      >
+                        {{ data.name }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="timeline-slider-container">
+  <!-- Navigation and Timeline Container -->
+  <div class="timeline-wrapper">
+    <!-- Left Navigation Button -->
+    <button 
+      class="nav-button nav-button-left"
+      (click)="shiftRangeLeft()"
+      [disabled]="!canShiftLeft()"
+      title="Shift range left">
+      <svg width="8" height="12" viewBox="0 0 8 12" fill="currentColor">
+        <path d="M7.5 1.5L2.5 6L7.5 10.5L6.5 12L0.5 6L6.5 0L7.5 1.5Z"/>
+      </svg>
+    </button>
+
+    <!-- Timeline Container -->
+    <div class="timeline-container" #timelineContainer>
+      <!-- Background Timeline -->
+      <div class="timeline-track"></div>
+      
+      <!-- Year Labels and Marks -->
+      <div class="timeline-years">
+        <div 
+          *ngFor="let year of getAllYears()" 
+          class="year-item"
+          [style.left.%]="getYearPosition(year)"
+          [class.selected]="isYearInRange(year)">
+          <div class="year-tick"></div>
+          <span class="year-label">{{ formatYearLabel(year) }}</span>
+        </div>
+      </div>
+
+      <!-- Selected Range Highlight (Draggable) -->
+      <div 
+        class="range-highlight" 
+        [style.left.%]="getRangeStartPosition()"
+        [style.width.%]="getRangeWidth()"
+        (mousedown)="onRangeMouseDown($event)"
+        title="Drag to move entire range">
+      </div>
+
+      <!-- Left Boundary Line (Draggable) -->
+      <div 
+        class="boundary-line boundary-left"
+        [style.left.%]="getRangeStartPosition()"
+        (mousedown)="onBoundaryMouseDown($event, 'min')"
+        title="Drag to adjust start year">
+        <!-- <div class="boundary-handle"></div> -->
+        <div class="boundary-label">{{ currentValue.min }} FY</div>
+      </div>
+
+      <!-- Right Boundary Line (Draggable) -->
+      <div 
+        class="boundary-line boundary-right"
+        [style.left.%]="getRangeEndPosition()"
+        (mousedown)="onBoundaryMouseDown($event, 'max')"
+        title="Drag to adjust end year">
+        <!-- <div class="boundary-handle"></div> -->
+        <div class="boundary-label">{{ currentValue.max }} FY</div>
+      </div>
+    </div>
+
+    <!-- Right Navigation Button -->
+    <button 
+      class="nav-button nav-button-right"
+      (click)="shiftRangeRight()"
+      [disabled]="!canShiftRight()"
+      title="Shift range right">
+      <svg width="8" height="12" viewBox="0 0 8 12" fill="currentColor">
+        <path d="M0.5 10.5L5.5 6L0.5 1.5L1.5 0L7.5 6L1.5 12L0.5 10.5Z"/>
+      </svg>
+    </button>
+  </div>
+</div>

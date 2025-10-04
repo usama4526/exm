@@ -1,0 +1,19 @@
+<!-- Sub Navigation -->
+<div class="flex flex-col md:flex-row">
+  <!-- Sidebar -->
+  <app-sidebar></app-sidebar>
+  <!-- Main Content -->
+
+  <div
+    class="flex-grow overflow-x-auto"
+    style="background: rgba(29, 29, 29, 0.7)"
+  >
+    <div
+      style="color: white; height: 82vh"
+      class="px-6 py-3 flex flex-col md:flex-row justify-between"
+    >
+      <div [innerText]="htmlContent"></div>
+      <!-- Carousel View -->
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="tree-grid" style="max-width: 70%;">
+  <app-tree-node
+    *ngFor="let n of checkboxData"
+    [node]="n"
+    [level]="0"
+    (toggled)="onNodeToggled($event)"
+    [clearLocationSelection]="clearLocationSelection"
+    [clearSectorSelection]="clearSectorSelection"
+    (onClearSectorSelection)="onClearSector($event)"
+    (onClearLocationSelection)="onClearLocation($event)"
+  ></app-tree-node>
+</div>
