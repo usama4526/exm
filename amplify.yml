@@ -11,8 +11,7 @@ frontend:
         - npm run build --prod
         - echo "Build completed. Checking output directory..."
         - ls -la dist/exm/browser
-        - rm -rf ~/.npm   
-        - rm -rf node_modules/.cache
+        - df -h
   artifacts:
     baseDirectory: dist/exm/browser
     files:
